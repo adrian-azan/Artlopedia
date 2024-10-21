@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cff7akcio5o7"]
+
+[ext_resource type="Texture2D" uid="uid://kphgfv0sggv8" path="res://ART/UI/FullStar.png" id="1_7p40t"]
+[ext_resource type="Texture2D" uid="uid://wm5ht1gwc56p" path="res://ART/UI/HalfStar.png" id="2_nh0ak"]
+[ext_resource type="Texture2D" uid="uid://lrdtynnjd1kl" path="res://ART/UI/EmptyStar.png" id="3_y48bn"]
+
+[node name="StarRating" type="Node2D"]
+
+[node name="Star1" type="Sprite2D" parent="."]
+texture = ExtResource("1_7p40t")
+
+[node name="Star2" type="Sprite2D" parent="."]
+position = Vector2(34, 25)
+texture = ExtResource("1_7p40t")
+
+[node name="Star3" type="Sprite2D" parent="."]
+position = Vector2(66, 0)
+texture = ExtResource("2_nh0ak")
+
+[node name="Star4" type="Sprite2D" parent="."]
+position = Vector2(105, 24)
+texture = ExtResource("3_y48bn")
+
+[node name="Star5" type="Sprite2D" parent="."]
+position = Vector2(143, 1)
+texture = ExtResource("3_y48bn")

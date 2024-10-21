@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://c34d7twrflrjj"]
+
+[ext_resource type="Texture2D" uid="uid://clxn6s78pbyfq" path="res://ART/UI/TitleBackground.png" id="1_ivgnd"]
+[ext_resource type="FontFile" uid="uid://bap4pqwq0wokt" path="res://ART/THEMES/pikmin_by_theadorableoshawott-da33cfr.ttf" id="2_rriad"]
+
+[node name="ArtID" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(81, 30)
+scale = Vector2(0.48, 0.48)
+texture = ExtResource("1_ivgnd")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ID Label" type="RichTextLabel" parent="Control"]
+layout_mode = 2
+offset_left = 9.0
+offset_top = 4.0
+offset_right = 210.1
+offset_bottom = 60.0
+theme_override_fonts/normal_font = ExtResource("2_rriad")
+theme_override_font_sizes/normal_font_size = 24
+text = "ID: "
+fit_content = true
+scroll_active = false
+
+[node name="ID Number" type="RichTextLabel" parent="Control"]
+layout_mode = 2
+offset_left = 48.0
+offset_top = 4.0
+offset_right = 249.1
+offset_bottom = 60.0
+theme_override_fonts/normal_font = ExtResource("2_rriad")
+theme_override_font_sizes/normal_font_size = 24
+text = "AVD"
+fit_content = true
+scroll_active = false
