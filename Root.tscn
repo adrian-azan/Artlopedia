@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://CODE/RootWindow.cs" id="1_ymshw"]
 [ext_resource type="PackedScene" uid="uid://bun4786lcjrqy" path="res://SCENES/UI/ArtTitle.tscn" id="2_15dh6"]
 [ext_resource type="PackedScene" uid="uid://c34d7twrflrjj" path="res://SCENES/UI/ArtID.tscn" id="3_gg4vn"]
-[ext_resource type="PackedScene" uid="uid://cff7akcio5o7" path="res://StarRating.tscn" id="4_3i65a"]
+[ext_resource type="PackedScene" uid="uid://cff7akcio5o7" path="res://SCENES/StarRating.tscn" id="4_3i65a"]
 [ext_resource type="PackedScene" uid="uid://d2w26aw448b0e" path="res://SCENES/3DView.tscn" id="7_0eqy0"]
 
 [node name="RootWindow" type="Node2D"]
@@ -35,7 +35,7 @@ scale = Vector2(2, 2)
 [node name="ArtTitle" parent="." instance=ExtResource("2_15dh6")]
 position = Vector2(-86, -304)
 
-[node name="ArtTitle2" parent="." instance=ExtResource("3_gg4vn")]
+[node name="ArtId" parent="." instance=ExtResource("3_gg4vn")]
 position = Vector2(172, -283)
 
 [node name="StarRating" parent="." instance=ExtResource("4_3i65a")]

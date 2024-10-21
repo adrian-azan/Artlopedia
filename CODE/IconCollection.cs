@@ -27,13 +27,17 @@ public partial class IconCollection : Node
         {
             ArtIcon artIcon = ResourceLoader.Load<PackedScene>("res://SCENES/UI/ArtIcon.tscn").Instantiate() as ArtIcon;
             _allIcons[columnToAddTo++].AddChild(artIcon);
-            artIcon.LoadArt(artDetails[0]);
+            artIcon.Init(artDetails);
 
             columnToAddTo %= _allIcons.Count;
             artDetails = artDetailsMasterList.GetCsvLine();
         } while (artDetailsMasterList.EofReached() == false);
 
-        _lastFilledCol = columnToAddTo - 1;
+        if (columnToAddTo == 0)
+            _lastFilledCol = _allIcons.Count - 1;
+        else
+            _lastFilledCol = columnToAddTo - 1;
+
         _lastFilledRow = _allIcons[_lastFilledCol].GetChildren().Count - 1;
 
         col = 0;

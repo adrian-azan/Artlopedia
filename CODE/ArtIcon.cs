@@ -10,6 +10,9 @@ public partial class ArtIcon : Control
     private Texture2D _highlighted;
     private Texture2D _normal;
 
+    public string _id;
+    public string _title;
+
     public override void _Ready()
     {
         _background = GetNode<TextureRect>("Background");
@@ -20,9 +23,11 @@ public partial class ArtIcon : Control
         _normal = ResourceLoader.Load("res://ART/UI/ArtBackground.png") as Texture2D;
     }
 
-    public void LoadArt(string fileTitle)
+    public void Init(string[] artDetails)
     {
-        _art.Texture = ResourceLoader.Load(String.Format("res://ART/PRINTS DONT COMMIT/{0}.JPG", fileTitle)) as Texture2D;
+        _art.Texture = ResourceLoader.Load(String.Format("res://ART/PRINTS DONT COMMIT/{0}.JPG", artDetails[0])) as Texture2D;
+        _title = artDetails[1];
+        _id = artDetails[0];
     }
 
     public void ArtTexture(ArtIcon artIcon)
