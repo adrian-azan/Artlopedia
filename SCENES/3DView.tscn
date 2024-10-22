@@ -12,7 +12,7 @@ ambient_light_energy = 0.0
 script = ExtResource("1_2gcue")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 8.5967, 0.0224895)
+transform = Transform3D(0.866025, -0.211309, 0.453154, 0, 0.906308, 0.422618, -0.5, -0.365998, 0.784886, 2.42251, 11.3933, 3.8025)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ijjuh")

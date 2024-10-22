@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="Artlopedia"
 
+[editor]
+
+import/use_multiple_threads=false
+
 [input]
 
 Right={
