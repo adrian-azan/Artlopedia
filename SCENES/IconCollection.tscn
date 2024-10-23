@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://m37vxohbdie7"]
+
+[ext_resource type="Script" path="res://CODE/IconCollection.cs" id="1_w76f5"]
+
+[node name="IconCollection" type="Node2D"]
+position = Vector2(96, 44)
+script = ExtResource("1_w76f5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 60
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50

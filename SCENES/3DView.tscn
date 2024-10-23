@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2w26aw448b0e"]
+
+[ext_resource type="Script" path="res://CODE/PortView3D.cs" id="1_2gcue"]
+[ext_resource type="PackedScene" uid="uid://dl3dukir7h4am" path="res://ART/MODELS/Room.blend" id="2_67mtm"]
+[ext_resource type="Texture2D" uid="uid://df0wm38uwcqbt" path="res://ART/PRINTS DONT COMMIT/4A.JPG" id="2_popdu"]
+
+[sub_resource type="Environment" id="Environment_ijjuh"]
+background_mode = 1
+ambient_light_energy = 0.0
+
+[node name="3dView" type="Node3D"]
+script = ExtResource("1_2gcue")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.866025, -0.211309, 0.453154, 0, 0.906308, 0.422618, -0.5, -0.365998, 0.784886, 2.42251, 11.3933, 3.8025)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ijjuh")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -11, 12.5401, 20)
+light_color = Color(0.916651, 0.658872, 0.628365, 1)
+light_energy = 6.4
+light_size = 0.83
+spot_range = 100.0
+spot_angle = 38.1474
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(0.996195, 0, 0.0871557, 0, 1, 0, -0.0871557, 0, 0.996195, 11, 12.5401, 20)
+light_color = Color(0.916651, 0.658872, 0.628365, 1)
+light_energy = 6.4
+light_size = 1.115
+spot_range = 100.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.561029, 0.827796, 0, -0.827796, 0.561029, 0, 25.815, 9.90607)
+light_color = Color(0.924496, 0.939089, 0.924896, 1)
+light_energy = 200.0
+spot_range = 25.349
+spot_angle = 12.215
+
+[node name="Room" parent="." instance=ExtResource("2_67mtm")]
+
+[node name="Cube" parent="Room/Walls" index="0"]
+cast_shadow = 0
+
+[node name="Cube_009" parent="Room/Walls" index="1"]
+cast_shadow = 0
+
+[node name="Cube_010" parent="Room/Walls" index="2"]
+cast_shadow = 0
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(-6.55671e-09, 0.15, 0, -0.134819, -5.89313e-09, 0.0657557, 0.0657557, 2.87427e-09, 0.134819, 0, 8.938, -1.25477)
+texture = ExtResource("2_popdu")
+
+[editable path="Room"]
