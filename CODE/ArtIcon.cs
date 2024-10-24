@@ -25,7 +25,7 @@ public partial class ArtIcon : Control
 
     public void Init(string[] artDetails)
     {
-        _art.Texture = ResourceLoader.Load(String.Format("res://ART/PRINTS DONT COMMIT/{0}.JPG", artDetails[0])) as Texture2D;
+        _art.Texture = ResourceLoader.Load(String.Format("res://ART/Your Art Here/{0}.JPG", artDetails[0])) as Texture2D;
         _title = artDetails[1];
         _id = artDetails[0];
     }
