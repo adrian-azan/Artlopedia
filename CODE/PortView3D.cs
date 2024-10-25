@@ -34,14 +34,18 @@ public partial class PortView3D : Node3D
         _camera.Position = currentPosition;
         _camera.LookAt(_art.Position);
         GD.Print(_camera.Position.X - _cameraEndPosition.X);
-        if (_camera.Position.X - _cameraEndPosition.X <= 0)
+        if (Mathf.Abs(_camera.Position.X - _cameraEndPosition.X) <= .2f)
             SetCamera();
     }
 
     public void SetCamera()
     {
-        _camera.Position = new Vector3(_rng.RandiRange(4, 8), _rng.RandiRange(8, 14), 0);
-        _cameraEndPosition = new Vector3(-_camera.Position.X, _rng.RandiRange(8, 14), 0);
+        int side = 1;
+        if (_rng.RandiRange(0, 1) == 0)
+            side = -1;
+
+        _camera.Position = new Vector3(_rng.RandiRange(side * 4, side * 8), _rng.RandiRange(10, 14), 0);
+        _cameraEndPosition = new Vector3(-_camera.Position.X, _rng.RandiRange(10, 14), 0);
         _cameraStartPosition = _camera.Position;
 
         _panDuration = _rng.RandiRange(7, 20);
