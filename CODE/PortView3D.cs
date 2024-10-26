@@ -38,8 +38,8 @@ public partial class PortView3D : Node3D
 
         _camera.Position = currentPosition;
         _camera.LookAt(_art.Position);
-        GD.Print(_camera.Position.X - _cameraEndPosition.X);
-        if (Mathf.Abs(_camera.Position.X - _cameraEndPosition.X) <= .2f && _fadeTimer.IsStopped())
+
+        if (Mathf.Abs(_camera.Position.X - _cameraEndPosition.X) <= .65f && _fadeTimer.IsStopped())
         {
             (GetNode("Camera3D/MeshInstance3D/AnimationPlayer") as AnimationPlayer).Play("FadeOut");
             _fadeTimer.Start();
@@ -58,7 +58,7 @@ public partial class PortView3D : Node3D
         _cameraStartPosition = _camera.Position;
 
         _panDuration = _rng.RandiRange(7, 20);
-        _zRadius = _rng.RandfRange(.25f, 1.5f);
+        _zRadius = _rng.RandiRange(1, 8);
         _cameraSpeedX = (_cameraStartPosition.X - _cameraEndPosition.X) / _panDuration;
         _cameraSpeedY = Mathf.Abs(_cameraStartPosition.Y - _cameraEndPosition.Y) / _panDuration;
 
