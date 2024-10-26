@@ -16,7 +16,7 @@ public partial class IconCollection : Node
         col = 0;
         _allIcons = Variant.From(GetNode("HBoxContainer").GetChildren()).AsGodotArray<VBoxContainer>();
 
-        var artDetailsMasterList = FileAccess.Open("res://ART/PRINTS DONT COMMIT/Master List.csv", FileAccess.ModeFlags.Read);
+        var artDetailsMasterList = FileAccess.Open("res://ART/Your Art Here/Master List.csv", FileAccess.ModeFlags.Read);
 
         string[] artDetails = artDetailsMasterList.GetCsvLine(); //Ignore Header
         artDetails = artDetailsMasterList.GetCsvLine();

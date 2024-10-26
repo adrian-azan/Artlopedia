@@ -1,8 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2w26aw448b0e"]
+[gd_scene load_steps=10 format=3 uid="uid://d2w26aw448b0e"]
 
 [ext_resource type="Script" path="res://CODE/PortView3D.cs" id="1_2gcue"]
 [ext_resource type="PackedScene" uid="uid://dl3dukir7h4am" path="res://ART/MODELS/Room.blend" id="2_67mtm"]
-[ext_resource type="Texture2D" uid="uid://df0wm38uwcqbt" path="res://ART/PRINTS DONT COMMIT/4A.JPG" id="2_popdu"]
+[ext_resource type="Texture2D" uid="uid://df0wm38uwcqbt" path="res://ART/Your Art Here/4A.JPG" id="2_popdu"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pg2qx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_etkfq"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_4wx2x"]
+resource_name = "FadeOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_p2iqw"]
+resource_name = "FadeIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t8vwa"]
+_data = {
+"FadeIn": SubResource("Animation_p2iqw"),
+"FadeOut": SubResource("Animation_4wx2x")
+}
 
 [sub_resource type="Environment" id="Environment_ijjuh"]
 background_mode = 1
@@ -12,7 +55,19 @@ ambient_light_energy = 0.0
 script = ExtResource("1_2gcue")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.866025, -0.211309, 0.453154, 0, 0.906308, 0.422618, -0.5, -0.365998, 0.784886, 2.42251, 11.3933, 3.8025)
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 14.835, 5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, -1.32115)
+mesh = SubResource("PlaneMesh_pg2qx")
+surface_material_override/0 = SubResource("StandardMaterial3D_etkfq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/MeshInstance3D"]
+libraries = {
+"": SubResource("AnimationLibrary_t8vwa")
+}
+
+[node name="Timer" type="Timer" parent="Camera3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ijjuh")
@@ -53,5 +108,7 @@ cast_shadow = 0
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(-6.55671e-09, 0.15, 0, -0.134819, -5.89313e-09, 0.0657557, 0.0657557, 2.87427e-09, 0.134819, 0, 8.938, -1.25477)
 texture = ExtResource("2_popdu")
+
+[connection signal="timeout" from="Camera3D/Timer" to="." method="SetCamera"]
 
 [editable path="Room"]
