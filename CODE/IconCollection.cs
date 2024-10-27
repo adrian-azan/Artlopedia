@@ -9,11 +9,13 @@ public partial class IconCollection : Node
     private int _lastFilledCol;
     private int _lastFilledRow;
     private Array<VBoxContainer> _allIcons;
+    private PortView3D _portView3D;
 
     public override void _Ready()
     {
         row = 0;
         col = 0;
+        _portView3D = GetNode<PortView3D>("../RightPanel/SubViewportContainer/SubViewport/3dView");
         _allIcons = Variant.From(GetNode("HBoxContainer").GetChildren()).AsGodotArray<VBoxContainer>();
 
         var artDetailsMasterList = FileAccess.Open("res://ART/Your Art Here/Master List.csv", FileAccess.ModeFlags.Read);
@@ -31,6 +33,7 @@ public partial class IconCollection : Node
 
             columnToAddTo %= _allIcons.Count;
             artDetails = artDetailsMasterList.GetCsvLine();
+            break;
         } while (artDetailsMasterList.EofReached() == false);
 
         if (columnToAddTo == 0)
@@ -44,7 +47,7 @@ public partial class IconCollection : Node
         (_allIcons[0].GetChildren()[0] as ArtIcon).Highlight();
     }
 
-    public override void _Process(double delta)
+    public void _Control(double delta)
     {
         if (Input.IsActionJustPressed("Up"))
             Up();
@@ -63,6 +66,12 @@ public partial class IconCollection : Node
 
         if (Input.IsActionJustPressed("RotateCounterClockwise"))
             (_allIcons[col].GetChildren()[row] as ArtIcon).RotateCounterClockwise();
+
+        if (Input.IsActionJustPressed("RotateClockwise3D"))
+            _portView3D.RotateClockwise();
+
+        if (Input.IsActionJustPressed("RotateCounterClockwise3D"))
+            _portView3D.RotateCounterClockwise();
     }
 
     public ArtIcon FocusedArtIcon()
