@@ -34,6 +34,11 @@ public partial class RootWindow : Node2D
             {
                 _rightPanel.Focus3DView();
             }
+
+            if (Input.IsActionJustPressed("East RightThumb"))
+            {
+                _rightPanel.UnFocus3DView();
+            }
         }
         else if (_state == State.Details)
         {

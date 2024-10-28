@@ -17,6 +17,7 @@ public partial class RightPanel : Node2D
         _artId = GetNode<RichTextLabel>("ArtId/Control/ID Number");
 
         _animationPlayer = GetNode<AnimationPlayer>("SubViewportContainer/AnimationPlayer");
+        _animationPlayer.Stop();
     }
 
     public override void _Process(double delta)
@@ -26,6 +27,11 @@ public partial class RightPanel : Node2D
     public void Focus3DView()
     {
         _animationPlayer.Play("Grow");
+    }
+
+    public void UnFocus3DView()
+    {
+        _animationPlayer.Play("Shrink");
     }
 
     public void SetFocusedArt(ArtIcon currentFocus)
