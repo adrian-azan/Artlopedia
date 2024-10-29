@@ -33,7 +33,6 @@ public partial class IconCollection : Node
 
             columnToAddTo %= _allIcons.Count;
             artDetails = artDetailsMasterList.GetCsvLine();
-            break;
         } while (artDetailsMasterList.EofReached() == false);
 
         if (columnToAddTo == 0)

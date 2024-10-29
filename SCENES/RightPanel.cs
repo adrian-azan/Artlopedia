@@ -34,6 +34,11 @@ public partial class RightPanel : Node2D
         _animationPlayer.Play("Shrink");
     }
 
+    public bool Busy()
+    {
+        return _animationPlayer.IsPlaying();
+    }
+
     public void SetFocusedArt(ArtIcon currentFocus)
     {
         _portView3D.ChangeArt(currentFocus.ArtTexture());

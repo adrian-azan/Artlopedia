@@ -30,18 +30,19 @@ public partial class RootWindow : Node2D
         {
             _iconCollection._Control(delta);
 
-            if (Input.IsActionJustPressed("South RightThumb"))
+            if (Input.IsActionJustPressed("South RightThumb") && _rightPanel.Busy() == false)
             {
                 _rightPanel.Focus3DView();
+                _state = State.Details;
             }
-
+        }
+        else if (_state == State.Details && _rightPanel.Busy() == false)
+        {
             if (Input.IsActionJustPressed("East RightThumb"))
             {
                 _rightPanel.UnFocus3DView();
+                _state = State.Icon;
             }
-        }
-        else if (_state == State.Details)
-        {
         }
     }
 }
