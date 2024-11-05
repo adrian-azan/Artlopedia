@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class RightPanel : Node2D
 {
@@ -18,10 +17,6 @@ public partial class RightPanel : Node2D
 
         _animationPlayer = GetNode<AnimationPlayer>("SubViewportContainer/AnimationPlayer");
         _animationPlayer.Stop();
-    }
-
-    public override void _Process(double delta)
-    {
     }
 
     public void Focus3DView()

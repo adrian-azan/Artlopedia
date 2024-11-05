@@ -33,10 +33,10 @@ public partial class RootWindow : Node2D
             if (Input.IsActionJustPressed("South RightThumb") && _rightPanel.Busy() == false)
             {
                 _rightPanel.Focus3DView();
-                _state = State.Details;
+                _state = State.ArtFocused;
             }
         }
-        else if (_state == State.Details && _rightPanel.Busy() == false)
+        else if (_state == State.ArtFocused && _rightPanel.Busy() == false)
         {
             if (Input.IsActionJustPressed("East RightThumb"))
             {
