@@ -4,31 +4,45 @@ using System;
 public partial class RootWindow : Node2D
 {
     private IconCollection _iconCollection;
-    private PortView3D _portView3D;
+    private RightPanel _rightPanel;
 
-    private RichTextLabel _artTitle;
-    private RichTextLabel _artId;
+    private enum State
+    {
+        Icon,
+        Details,
+        ArtFocused
+    };
+
+    private State _state;
 
     public override void _Ready()
     {
         _iconCollection = GetNode<IconCollection>("IconCollection");
-        _portView3D = GetNode<PortView3D>("SubViewportContainer/SubViewport/3dView");
-        _artTitle = GetNode<RichTextLabel>("ArtTitle/RichTextLabel");
-        _artId = GetNode<RichTextLabel>("ArtId/Control/ID Number");
+        _rightPanel = GetNode<RightPanel>("RightPanel");
+        _state = State.Icon;
     }
 
     public override void _Process(double delta)
     {
-        ArtIcon currentFocus = _iconCollection.FocusedArtIcon();
+        _rightPanel.SetFocusedArt(_iconCollection.FocusedArtIcon());
 
-        _portView3D.ChangeArt(currentFocus.ArtTexture());
-        _artTitle.Text = currentFocus._title;
-        _artId.Text = currentFocus._id;
+        if (_state == State.Icon)
+        {
+            _iconCollection._Control(delta);
 
-        if (Input.IsActionJustPressed("RotateClockwise3D"))
-            _portView3D.RotateClockwise();
-
-        if (Input.IsActionJustPressed("RotateCounterClockwise3D"))
-            _portView3D.RotateCounterClockwise();
+            if (Input.IsActionJustPressed("South RightThumb") && _rightPanel.Busy() == false)
+            {
+                _rightPanel.Focus3DView();
+                _state = State.ArtFocused;
+            }
+        }
+        else if (_state == State.ArtFocused && _rightPanel.Busy() == false)
+        {
+            if (Input.IsActionJustPressed("East RightThumb"))
+            {
+                _rightPanel.UnFocus3DView();
+                _state = State.Icon;
+            }
+        }
     }
 }
