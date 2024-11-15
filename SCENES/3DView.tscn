@@ -1,114 +1,88 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2w26aw448b0e"]
+[gd_scene load_steps=12 format=3 uid="uid://d2w26aw448b0e"]
 
 [ext_resource type="Script" path="res://CODE/PortView3D.cs" id="1_2gcue"]
-[ext_resource type="PackedScene" uid="uid://dl3dukir7h4am" path="res://ART/MODELS/Room.blend" id="2_67mtm"]
+[ext_resource type="PackedScene" uid="uid://bhawtfetnd0l2" path="res://SCENES/Camera.tscn" id="2_k457q"]
 [ext_resource type="Texture2D" uid="uid://df0wm38uwcqbt" path="res://ART/Your Art Here/4A.JPG" id="2_popdu"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_pg2qx"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_etkfq"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Animation" id="Animation_4wx2x"]
-resource_name = "FadeOut"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:transparency")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_p2iqw"]
-resource_name = "FadeIn"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:transparency")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_t8vwa"]
-_data = {
-"FadeIn": SubResource("Animation_p2iqw"),
-"FadeOut": SubResource("Animation_4wx2x")
-}
-
-[sub_resource type="Environment" id="Environment_ijjuh"]
-background_mode = 1
-ambient_light_energy = 0.0
+[ext_resource type="PackedScene" uid="uid://b0jcbn4w1p0nc" path="res://ART/MODELS/RoomTiled.gltf" id="4_3xaad"]
+[ext_resource type="PackedScene" uid="uid://bg6yw0k3glju1" path="res://SCENES/Easel.tscn" id="4_fvj48"]
+[ext_resource type="PackedScene" uid="uid://ckwn20cvxrgdv" path="res://ART/MODELS/Kitchen.gltf" id="6_xlj14"]
+[ext_resource type="Texture2D" uid="uid://vbh3afs2hj6t" path="res://ART/Your Art Here/4B.JPG" id="7_pf60k"]
+[ext_resource type="Texture2D" uid="uid://cp1h3ld4jylj1" path="res://ART/Your Art Here/13.JPG" id="8_w0l5c"]
+[ext_resource type="Texture2D" uid="uid://cl3lgsp26judt" path="res://ART/Your Art Here/5D.JPG" id="9_cboc1"]
+[ext_resource type="Texture2D" uid="uid://ciyv4nyx27iml" path="res://ART/Your Art Here/14.JPG" id="10_06ap4"]
+[ext_resource type="Texture2D" uid="uid://dlc7k3m48jvx" path="res://ART/Your Art Here/79.JPG" id="11_5dc6l"]
 
 [node name="3dView" type="Node3D"]
+transform = Transform3D(2.13, 0, 0, 0, 2.13, 0, 0, 0, 2.13, 0, 0, 0)
 script = ExtResource("1_2gcue")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 14.835, 5)
+[node name="Camera" parent="." instance=ExtResource("2_k457q")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
-transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, -1.32115)
-mesh = SubResource("PlaneMesh_pg2qx")
-surface_material_override/0 = SubResource("StandardMaterial3D_etkfq")
+[node name="SpotLightRoom" type="Node3D" parent="."]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/MeshInstance3D"]
-libraries = {
-"": SubResource("AnimationLibrary_t8vwa")
-}
-
-[node name="Timer" type="Timer" parent="Camera3D"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_ijjuh")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -11, 12.5401, 20)
+[node name="SpotLight3D" type="SpotLight3D" parent="SpotLightRoom"]
+transform = Transform3D(0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, -10, 12.5, 20)
 light_color = Color(0.916651, 0.658872, 0.628365, 1)
-light_energy = 6.4
+light_energy = 44.565
 light_size = 0.83
 spot_range = 100.0
 spot_angle = 38.1474
 
-[node name="SpotLight3D2" type="SpotLight3D" parent="."]
-transform = Transform3D(0.996195, 0, 0.0871557, 0, 1, 0, -0.0871557, 0, 0.996195, 11, 12.5401, 20)
+[node name="SpotLight3D2" type="SpotLight3D" parent="SpotLightRoom"]
+transform = Transform3D(0.906308, 0, 0.422618, 0, 1, 0, -0.422618, 0, 0.906308, 10, 12, 20)
 light_color = Color(0.916651, 0.658872, 0.628365, 1)
-light_energy = 6.4
-light_size = 1.115
+light_energy = 44.565
 spot_range = 100.0
 
-[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+[node name="SpotLight3D3" type="SpotLight3D" parent="SpotLightRoom"]
 transform = Transform3D(1, 0, 0, 0, 0.561029, 0.827796, 0, -0.827796, 0.561029, 0, 25.815, 9.90607)
 light_color = Color(0.924496, 0.939089, 0.924896, 1)
-light_energy = 200.0
+light_energy = 44.565
 spot_range = 25.349
 spot_angle = 12.215
 
-[node name="Room" parent="." instance=ExtResource("2_67mtm")]
-
-[node name="Cube" parent="Room/Walls" index="0"]
-cast_shadow = 0
-
-[node name="Cube_009" parent="Room/Walls" index="1"]
-cast_shadow = 0
-
-[node name="Cube_010" parent="Room/Walls" index="2"]
-cast_shadow = 0
-
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="Sprite3D" type="Sprite3D" parent="SpotLightRoom"]
 transform = Transform3D(-6.55671e-09, 0.15, 0, -0.134819, -5.89313e-09, 0.0657557, 0.0657557, 2.87427e-09, 0.134819, 0, 8.938, -1.25477)
 texture = ExtResource("2_popdu")
 
-[connection signal="timeout" from="Camera3D/Timer" to="." method="SetCamera"]
+[node name="default2" parent="SpotLightRoom" instance=ExtResource("4_3xaad")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.157602, -23.8485)
 
-[editable path="Room"]
+[node name="Empty" parent="SpotLightRoom/default2" instance=ExtResource("4_fvj48")]
+transform = Transform3D(0.5, 0, 0, 0, 0.190535, -0.462273, 0, 0.462273, 0.190535, -0.25, 2.48, 11.978)
+
+[node name="Kitchen" type="Node3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -24)
+visible = false
+
+[node name="default2" parent="Kitchen" instance=ExtResource("6_xlj14")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Kitchen"]
+transform = Transform3D(0.587446, -0.659776, 0.468618, 0.31779, 0.720624, 0.616207, -0.744256, -0.213066, 0.632998, 3.19582, 18.0165, 16.1742)
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Kitchen"]
+transform = Transform3D(0.247145, 0.588422, -0.769856, -0.0429426, 0.800374, 0.597961, 0.968026, -0.114724, 0.223077, -3.524, 18.017, 16.174)
+
+[node name="Sprite3D" type="Sprite3D" parent="Kitchen"]
+transform = Transform3D(6.6874e-17, -1.5299e-09, 0.035, -0.035, -1.5299e-09, -4.63221e-24, 1.5299e-09, -0.035, -1.5299e-09, -8.87013, 6.64617, 4.76888)
+texture = ExtResource("2_popdu")
+
+[node name="Sprite3D6" type="Sprite3D" parent="Kitchen"]
+transform = Transform3D(6.6874e-17, -1.5299e-09, 0.035, -0.035, -1.5299e-09, -4.63221e-24, 1.5299e-09, -0.035, -1.5299e-09, -8.87013, 6.64617, 1.37691)
+texture = ExtResource("7_pf60k")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Kitchen"]
+transform = Transform3D(-1.5299e-09, 0.035, 0, -0.035, -1.5299e-09, 0, 0, 0, 0.035, 2.62231e-08, 5.26506, 0.128016)
+texture = ExtResource("8_w0l5c")
+
+[node name="Sprite3D3" type="Sprite3D" parent="Kitchen"]
+transform = Transform3D(-1.5299e-09, 0.035, 0, -0.035, -1.5299e-09, 0, 0, 0, 0.035, 2.48134, 6.89628, 0.128016)
+texture = ExtResource("9_cboc1")
+
+[node name="Sprite3D4" type="Sprite3D" parent="Kitchen"]
+transform = Transform3D(-1.5299e-09, 0.035, 0, -0.035, -1.5299e-09, 0, 0, 0, 0.035, 5.265, 5.26506, 0.128016)
+texture = ExtResource("10_06ap4")
+
+[node name="Sprite3D5" type="Sprite3D" parent="Kitchen"]
+transform = Transform3D(-1.5299e-09, 0.035, 0, -0.035, -1.5299e-09, 0, 0, 0, 0.035, 7.765, 6.896, 0.128)
+texture = ExtResource("11_5dc6l")
