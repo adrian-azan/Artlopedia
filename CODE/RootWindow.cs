@@ -1,10 +1,12 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public partial class RootWindow : Node2D
 {
     private IconCollection _iconCollection;
     private RightPanel _rightPanel;
+    private HttpRequestHandler _httpRequestHandler;
 
     private enum State
     {
@@ -19,6 +21,7 @@ public partial class RootWindow : Node2D
     {
         _iconCollection = GetNode<IconCollection>("IconCollection");
         _rightPanel = GetNode<RightPanel>("RightPanel");
+        _httpRequestHandler = GetNode<HttpRequestHandler>("HttpRequestHandler");
         _state = State.Icon;
     }
 
@@ -43,6 +46,22 @@ public partial class RootWindow : Node2D
                 _rightPanel.UnFocus3DView();
                 _state = State.Icon;
             }
+        }
+
+        if (Input.IsActionJustPressed("UploadArt"))
+        {
+            Array<Dictionary> requestItems = new Array<Dictionary>();
+            foreach (var art in _iconCollection.AllArt())
+            {
+                requestItems.Add(art.ToJson());
+            }
+
+            _httpRequestHandler.PUT(requestItems);
+        }
+
+        if (Input.IsActionJustPressed("DownloadArt"))
+        {
+            _httpRequestHandler.GET();
         }
     }
 }

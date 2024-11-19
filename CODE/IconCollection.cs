@@ -78,6 +78,23 @@ public partial class IconCollection : Node
         return _allIcons[col].GetChildren()[row] as ArtIcon;
     }
 
+    public Array<ArtIcon> AllArt()
+    {
+        Array<ArtIcon> allArt = new Array<ArtIcon>();
+        foreach (var column in _allIcons)
+        {
+            var columnArt = column.GetChildren();
+
+            foreach (var art in columnArt)
+            {
+                if (art is ArtIcon)
+                    allArt.Add(art as ArtIcon);
+            }
+        }
+
+        return allArt;
+    }
+
     public void Down()
     {
         (_allIcons[col].GetChildren()[row] as ArtIcon).UnHighlight();

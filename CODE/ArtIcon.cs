@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public partial class ArtIcon : Control
@@ -12,6 +13,13 @@ public partial class ArtIcon : Control
 
     public string _id;
     public string _title;
+    public short _rating;
+    public String[] _tags;
+    public String _locationPurchased;
+    public float _width;
+    public float _height;
+    public float _orientation2D;
+    public float _orientation3D;
 
     public override void _Ready()
     {
@@ -59,5 +67,26 @@ public partial class ArtIcon : Control
     public void UnHighlight()
     {
         _background.Texture = _normal;
+    }
+
+    public Dictionary ToJson()
+    {
+        Dictionary output = new Dictionary();
+        Dictionary dimensions = new Dictionary();
+        dimensions.Add("width", _width);
+        dimensions.Add("height", _height);
+        Dictionary orientation = new Dictionary();
+        orientation.Add("2D", (GetNode("AspectRatioContainer") as AspectRatioContainer).RotationDegrees);
+        orientation.Add("3D", _orientation3D);
+
+        output.Add("title", _title);
+        output.Add("id", _id);
+        output.Add("rating", _rating);
+        output.Add("tags", _tags);
+        output.Add("locationPurchased", _locationPurchased);
+        output.Add("dimensions", dimensions);
+        output.Add("orientation", orientation);
+
+        return output;
     }
 }
