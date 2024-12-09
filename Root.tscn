@@ -8,8 +8,9 @@
 [node name="RootWindow" type="Node2D"]
 script = ExtResource("1_ymshw")
 
-[node name="HttpRequestHandler" type="Node" parent="."]
+[node name="HttpRequestHandler" type="HTTPRequest" parent="."]
 script = ExtResource("4_jvkkl")
+_debugState = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

@@ -3,19 +3,26 @@ using Godot.Collections;
 using System;
 using System.Collections.Generic;
 
-public partial class HttpRequestHandler : Node
+public partial class HttpRequestHandler : HttpRequest
 {
-    private static HttpRequest _requester;
-    private String _baseUrl;
+    public enum RequestTypes
+    {
+        NONE,
+        GET_ALL_ART,
+        PUT_ALL_ART
+    };
+
+    public RequestTypes _lastRequest;
+
+    private string _baseUrl;
 
     [Export]
     private bool _debugState;
 
     public override void _Ready()
     {
-        _requester = new HttpRequest();
-        AddChild(_requester);
-        _requester.RequestCompleted += HttpRequestCompleted;
+        if (_debugState)
+            RequestCompleted += DEBUG_HttpRequestCompleted;
 
         var configContent = FileAccess.GetFileAsString("res://CODE/config.json");
         var config = Json.ParseString(configContent).AsGodotDictionary();
@@ -24,33 +31,44 @@ public partial class HttpRequestHandler : Node
 
     public void GET()
     {
-        Error error = _requester.Request(String.Format("{0}/art", _baseUrl), null, HttpClient.Method.Get);
+        if (_lastRequest != RequestTypes.NONE)
+            return;
+
+        Error error = Request(String.Format("{0}/art", _baseUrl), null, HttpClient.Method.Get);
 
         if (error != Error.Ok && _debugState)
         {
             GD.PushError(String.Format("Failure in HttpRequestHandler.GET\n\t{0}", error.ToString()));
+            return;
         }
+
+        _lastRequest = RequestTypes.GET_ALL_ART;
     }
 
     public void PUT(Array<Dictionary> allArt)
     {
+        if (_lastRequest != RequestTypes.NONE)
+            return;
+
         Dictionary request = new Dictionary();
         request.Add("items", allArt);
 
-        Error error = _requester.Request(String.Format("{0}/art", _baseUrl), null, HttpClient.Method.Put, Json.Stringify(request, "\t"));
+        Error error = Request(String.Format("{0}/art", _baseUrl), null, HttpClient.Method.Put, Json.Stringify(request, "\t"));
 
         if (error != Error.Ok && _debugState)
         {
             GD.PushError(String.Format("Failure in HttpRequestHandler.PUT\n\t{0}", error.ToString()));
+            return;
         }
+
+        _lastRequest = RequestTypes.PUT_ALL_ART;
     }
 
-    // Called when the HTTP request is completed.
-    private void HttpRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
+    private void DEBUG_HttpRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
     {
-        if (responseCode != 200 && _debugState)
+        if (responseCode != 200)
             GD.PushError(String.Format("Request failed: {0} \n{1}", responseCode, Json.ParseString(body.GetStringFromUtf8())));
-        else if (_debugState)
+        else
             GD.PushWarning(String.Format("Request Success: {0} \n{1}", responseCode, Json.ParseString(body.GetStringFromUtf8())));
     }
 }

@@ -78,6 +78,22 @@ public partial class IconCollection : Node
         return _allIcons[col].GetChildren()[row] as ArtIcon;
     }
 
+    public void AllArt(Dictionary<string, Dictionary> allArt)
+    {
+        foreach (var column in _allIcons)
+        {
+            var columnArt = column.GetChildren();
+
+            foreach (var art in columnArt)
+            {
+                if (art is ArtIcon)
+                {
+                    (art as ArtIcon).Deserialize(allArt[(art as ArtIcon)._id]);
+                }
+            }
+        }
+    }
+
     public Array<ArtIcon> AllArt()
     {
         Array<ArtIcon> allArt = new Array<ArtIcon>();

@@ -51,12 +51,12 @@ public partial class ArtIcon : Control
 
     public void RotateClockwise()
     {
-        (GetNode("AspectRatioContainer") as AspectRatioContainer).RotationDegrees += 90;
+        _container.RotationDegrees += 90;
     }
 
     public void RotateCounterClockwise()
     {
-        (GetNode("AspectRatioContainer") as AspectRatioContainer).RotationDegrees -= 90;
+        _container.RotationDegrees -= 90;
     }
 
     public void Highlight()
@@ -69,14 +69,31 @@ public partial class ArtIcon : Control
         _background.Texture = _normal;
     }
 
-    public Dictionary ToJson()
+    public void Deserialize(Dictionary artDetails)
+    {
+        _height = (float)artDetails["dimensions"].AsGodotDictionary()["height"];
+        _width = (float)artDetails["dimensions"].AsGodotDictionary()["width"];
+
+        _orientation2D = (float)artDetails["orientation"].AsGodotDictionary()["2D"];
+        _orientation3D = (float)artDetails["orientation"].AsGodotDictionary()["3D"];
+
+        _container.RotationDegrees = _orientation2D;
+
+        _id = artDetails["id"].AsString();
+        _locationPurchased = artDetails["locationPurchased"].AsString();
+        _rating = (short)artDetails["rating"];
+        _tags = artDetails["tags"].AsStringArray();
+        _title = artDetails["title"].AsString();
+    }
+
+    public Dictionary Serialize()
     {
         Dictionary output = new Dictionary();
         Dictionary dimensions = new Dictionary();
         dimensions.Add("width", _width);
         dimensions.Add("height", _height);
         Dictionary orientation = new Dictionary();
-        orientation.Add("2D", (GetNode("AspectRatioContainer") as AspectRatioContainer).RotationDegrees);
+        orientation.Add("2D", _container.RotationDegrees);
         orientation.Add("3D", _orientation3D);
 
         output.Add("title", _title);
