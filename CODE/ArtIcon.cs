@@ -14,8 +14,8 @@ public partial class ArtIcon : Control
     public string _id;
     public string _title;
     public short _rating;
-    public String[] _tags;
-    public String _locationPurchased;
+    public string[] _tags;
+    public string _locationPurchased;
     public float _width;
     public float _height;
     public float _orientation2D;

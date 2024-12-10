@@ -69,6 +69,6 @@ public partial class HttpRequestHandler : HttpRequest
         if (responseCode != 200)
             GD.PushError(String.Format("Request failed: {0} \n{1}", responseCode, Json.ParseString(body.GetStringFromUtf8())));
         else
-            GD.PushWarning(String.Format("Request Success: {0} \n{1}", responseCode, Json.ParseString(body.GetStringFromUtf8())));
+            GD.PushWarning(String.Format("Request Success: {0} \n{1}", responseCode, Json.ParseString(body.GetStringFromUtf8()).AsGodotDictionary()));
     }
 }

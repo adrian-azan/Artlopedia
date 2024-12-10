@@ -78,7 +78,7 @@ public partial class IconCollection : Node
         return _allIcons[col].GetChildren()[row] as ArtIcon;
     }
 
-    public void AllArt(Dictionary<string, Dictionary> allArt)
+    public void AllArt(Dictionary<string, Dictionary> allArtDetails)
     {
         foreach (var column in _allIcons)
         {
@@ -88,7 +88,7 @@ public partial class IconCollection : Node
             {
                 if (art is ArtIcon)
                 {
-                    (art as ArtIcon).Deserialize(allArt[(art as ArtIcon)._id]);
+                    (art as ArtIcon).Deserialize(allArtDetails[(art as ArtIcon)._id]);
                 }
             }
         }
