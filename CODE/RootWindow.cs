@@ -1,10 +1,12 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public partial class RootWindow : Node2D
 {
     private IconCollection _iconCollection;
     private RightPanel _rightPanel;
+    private HttpRequestHandler _httpRequestHandler;
 
     private enum State
     {
@@ -19,6 +21,10 @@ public partial class RootWindow : Node2D
     {
         _iconCollection = GetNode<IconCollection>("IconCollection");
         _rightPanel = GetNode<RightPanel>("RightPanel");
+        _httpRequestHandler = GetNode<HttpRequestHandler>("HttpRequestHandler");
+        _httpRequestHandler.RequestCompleted += ProcessCompletedRequest;
+        _httpRequestHandler.GET(); //Retrieve Art details on start of program
+
         _state = State.Icon;
     }
 
@@ -44,5 +50,44 @@ public partial class RootWindow : Node2D
                 _state = State.Icon;
             }
         }
+
+        if (Input.IsActionJustPressed("UploadArt"))
+        {
+            Array<Dictionary> requestItems = new Array<Dictionary>();
+            foreach (var art in _iconCollection.AllArt())
+            {
+                requestItems.Add(art.Serialize());
+            }
+
+            _httpRequestHandler.PUT(requestItems);
+        }
+
+        if (Input.IsActionJustPressed("DownloadArt"))
+        {
+            _httpRequestHandler.GET();
+        }
+    }
+
+    public void ProcessCompletedRequest(long result, long responseCode, string[] headers, byte[] body)
+    {
+        if (_httpRequestHandler._lastRequest == HttpRequestHandler.RequestTypes.GET_ALL_ART)
+        {
+            var requestResponse = Json.ParseString(body.GetStringFromUtf8()).AsGodotDictionary();
+
+            var allRemoteArt_Unformatted = requestResponse["body"].AsGodotArray();
+            Dictionary<string, Dictionary> allArtDetails = new Dictionary<string, Dictionary>();
+
+            //Convert list of artDetails into a dictionary of artDetails
+            // {ID: ArtDetails} will allow iconCollection to easily find artIcon to configure
+            foreach (var artDetails in allRemoteArt_Unformatted)
+            {
+                Dictionary artDetailsDictionary = Json.ParseString(artDetails.AsString()).AsGodotDictionary();
+                allArtDetails.Add(artDetailsDictionary["id"].AsString(), artDetailsDictionary);
+            }
+
+            _iconCollection.AllArt(allArtDetails);
+        }
+
+        _httpRequestHandler._lastRequest = HttpRequestHandler.RequestTypes.NONE;
     }
 }
