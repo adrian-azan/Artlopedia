@@ -26,6 +26,11 @@ public partial class PortView3D : Node3D
         _camera._Process(delta);
     }
 
+    public void MakeCurrent()
+    {
+        _camera.MakeCurrent();
+    }
+
     public void ChangeArt(Texture2D art)
     {
         _art[_artIndex].Texture = art;
@@ -33,14 +38,14 @@ public partial class PortView3D : Node3D
 
     public void RotateClockwise()
     {
-        Sprite3D art = GetNode("SpotLightRoom/Sprite3D") as Sprite3D;
+        Sprite3D art = GetNode("Sprite3D") as Sprite3D;
 
         art.RotationDegrees = new Vector3(-20, 0, art.RotationDegrees.Z - 90);
     }
 
     public void RotateCounterClockwise()
     {
-        Sprite3D art = GetNode("SpotLightRoom/Sprite3D") as Sprite3D;
+        Sprite3D art = GetNode("Sprite3D") as Sprite3D;
 
         art.RotationDegrees = new Vector3(-20, 0, art.RotationDegrees.Z + 90);
     }

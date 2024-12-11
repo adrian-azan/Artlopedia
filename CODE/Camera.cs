@@ -19,6 +19,11 @@ public partial class Camera : Node3D
         _animationPlayer = _camera.GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
+    public void MakeCurrent()
+    {
+        _camera.MakeCurrent();
+    }
+
     public virtual void Focus(Sprite3D subject)
     { }
 

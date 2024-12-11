@@ -11,7 +11,6 @@ public partial class Camera_Tripod : Camera
 
     public override void SetCamera()
     {
-        GD.Print("Setting");
         _animationPlayer.Play("FadeIn");
         _animationPlayer.Play("Rotate");
     }

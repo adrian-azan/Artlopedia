@@ -36,12 +36,12 @@ public partial class Camera_Panning : Camera
         }
     }
 
-    public new void Focus(Sprite3D subject)
+    public override void Focus(Sprite3D subject)
     {
         _subject = subject;
     }
 
-    public new void SetCamera()
+    public override void SetCamera()
     {
         float _panDuration = _rng.RandiRange(7, 20);
         float subjectX = _subject.GlobalPosition.X;
@@ -52,8 +52,8 @@ public partial class Camera_Panning : Camera
         if (_rng.RandiRange(0, 1) == 0)
             side = -1;
 
-        _camera.Position = new Vector3(subjectX + _rng.RandiRange(side * 4, side * 8), subjectY + _rng.RandiRange(-7, 2), 0);
-        _cameraEndPosition = new Vector3(-_camera.Position.X, subjectY + _rng.RandiRange(-7, 2), 0);
+        _camera.Position = new Vector3(subjectX + _rng.RandiRange(side * 4, side * 8), subjectY + _rng.RandiRange(-9, 0), 0);
+        _cameraEndPosition = new Vector3(-_camera.Position.X, subjectY + _rng.RandiRange(-9, 0), 0);
         _cameraStartPosition = _camera.Position;
 
         _zRadius = _rng.RandiRange(2, 6);
