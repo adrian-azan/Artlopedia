@@ -15,7 +15,7 @@ public partial class IconCollection : Node
     {
         row = 0;
         col = 0;
-        _portView3D = GetNode<PortView3D>("../RightPanel/SubViewportContainer/SubViewport/3dView");
+        _portView3D = Tools.GetChild<PortView3D>(GetNode(".."));
         _allIcons = Variant.From(GetNode("HBoxContainer").GetChildren()).AsGodotArray<VBoxContainer>();
 
         var artDetailsMasterList = FileAccess.Open("res://ART/Your Art Here/Master List.csv", FileAccess.ModeFlags.Read);

@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcemcqv71kv5c"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_18wds"]
+size = Vector3(0.1, 1, 0.1)
+
+[node name="Frame" type="Node3D"]
+
+[node name="Left" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.509122, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Left"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0572841, 0, 0)
+mesh = SubResource("BoxMesh_18wds")
+
+[node name="Right" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.450205, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Right"]
+mesh = SubResource("BoxMesh_18wds")
+
+[node name="Top" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Top"]
+mesh = SubResource("BoxMesh_18wds")
+
+[node name="Bottom" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bottom"]
+mesh = SubResource("BoxMesh_18wds")
