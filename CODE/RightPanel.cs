@@ -11,7 +11,7 @@ public partial class RightPanel : Node2D
 
     public override void _Ready()
     {
-        _portView3D = GetNode<PortView3D>("SubViewportContainer/SubViewport/3dView");
+        _portView3D = Tools.GetChild<PortView3D>(this);
         _artTitle = GetNode<RichTextLabel>("ArtTitle/RichTextLabel");
         _artId = GetNode<RichTextLabel>("ArtId/Control/ID Number");
 

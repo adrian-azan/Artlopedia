@@ -1,28 +1,34 @@
 using Godot;
-using System;
-using System.Runtime.CompilerServices;
+using Godot.Collections;
 
 public partial class PortView3D : Node3D
 {
-    private Sprite3D _art;
+    private Array<Sprite3D> _art;
+    private int _artIndex;
     private Camera _camera;
+
+    private RandomNumberGenerator _rng;
 
     public override void _Ready()
     {
-        _art = GetNode<Sprite3D>("SpotLightRoom/Sprite3D");
-        _camera = GetNode<Camera>("Camera");
-        _camera.Focus(_art);
+        _art = Tools.GetChildren<Sprite3D>(this);
+        _camera = Tools.GetChild<Camera>(this);
+        _rng = new RandomNumberGenerator();
+
+        _artIndex = (int)(_rng.Randi() % _art.Count);
+        _camera.Focus(_art[_artIndex]);
         _camera.SetCamera();
     }
 
     public override void _Process(double delta)
     {
-        _camera._Process(delta, _art);
+        _camera.Focus(_art[_artIndex]);
+        _camera._Process(delta);
     }
 
     public void ChangeArt(Texture2D art)
     {
-        _art.Texture = art;
+        _art[_artIndex].Texture = art;
     }
 
     public void RotateClockwise()
