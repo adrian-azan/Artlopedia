@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhawtfetnd0l2"]
+[gd_scene load_steps=9 format=3 uid="uid://bhawtfetnd0l2"]
 
 [ext_resource type="Script" path="res://CODE/Camera.cs" id="1_p82gs"]
 
@@ -39,10 +39,27 @@ tracks/0/keys = {
 "values": [1.0, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_ruej5"]
+resource_name = "Rotate"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 9, 11, 20),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.785398, 0), Vector3(0, -0.785398, 0), Vector3(0, -0.785398, 0), Vector3(0, 0.785398, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t8vwa"]
 _data = {
 "FadeIn": SubResource("Animation_p2iqw"),
-"FadeOut": SubResource("Animation_4wx2x")
+"FadeOut": SubResource("Animation_4wx2x"),
+"Rotate": SubResource("Animation_ruej5")
 }
 
 [sub_resource type="Environment" id="Environment_bsxh5"]
@@ -50,6 +67,7 @@ background_mode = 1
 ambient_light_energy = 0.0
 
 [node name="Camera" type="Node3D"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 script = ExtResource("1_p82gs")
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -57,6 +75,7 @@ fov = 50.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, -1.32115)
+visible = false
 mesh = SubResource("PlaneMesh_yyncb")
 surface_material_override/0 = SubResource("StandardMaterial3D_1esa5")
 
