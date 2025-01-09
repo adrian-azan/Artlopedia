@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2w26aw448b0e"]
+
+[ext_resource type="Script" path="res://CODE/PortView3D.cs" id="1_ckpyq"]
+[ext_resource type="PackedScene" uid="uid://bhawtfetnd0l2" path="res://SCENES/Camera.tscn" id="2_fltm4"]
+[ext_resource type="Script" path="res://CODE/Camera_Panning.cs" id="3_hlfs5"]
+[ext_resource type="PackedScene" uid="uid://b0jcbn4w1p0nc" path="res://ART/MODELS/RoomTiled.gltf" id="3_ullht"]
+[ext_resource type="PackedScene" uid="uid://bg6yw0k3glju1" path="res://SCENES/Easel.tscn" id="4_sess8"]
+[ext_resource type="Texture2D" uid="uid://df0wm38uwcqbt" path="res://ART/Your Art Here/4A.JPG" id="5_ujx4e"]
+
+[node name="Spotlight" type="Node3D"]
+transform = Transform3D(2.15, 0, 0, 0, 2.15, 0, 0, 0, 2.15, 0, 0, 0)
+script = ExtResource("1_ckpyq")
+
+[node name="Camera" parent="." instance=ExtResource("2_fltm4")]
+script = ExtResource("3_hlfs5")
+
+[node name="default2" parent="." instance=ExtResource("3_ullht")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.157602, -23.8485)
+
+[node name="Empty" parent="default2" instance=ExtResource("4_sess8")]
+transform = Transform3D(0.5, 0, 0, 0, 0.190535, -0.462273, 0, 0.462273, 0.190535, -0.25, 2.48, 11.978)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.425497, 0, -0.198412, 0, 0.469484, 0, 0.198412, 0, 0.425497, -10, 12.5, 20)
+light_color = Color(0.916651, 0.658872, 0.628365, 1)
+light_energy = 44.565
+light_size = 0.83
+spot_range = 100.0
+spot_angle = 38.1474
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(0.425497, 0, 0.198412, 0, 0.469484, 0, -0.198412, 0, 0.425497, 10, 12, 20)
+light_color = Color(0.916651, 0.658872, 0.628365, 1)
+light_energy = 44.565
+spot_range = 100.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="."]
+transform = Transform3D(0.469484, 0, 0, 0, 0.263394, 0.388637, 0, -0.388637, 0.263394, 0, 25.815, 9.90607)
+light_color = Color(0.924496, 0.939089, 0.924896, 1)
+light_energy = 44.565
+spot_range = 25.349
+spot_angle = 12.215
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(-6.55671e-09, 0.15, 0, -0.134819, -5.89313e-09, 0.0657557, 0.0657557, 2.87427e-09, 0.134819, 0, 8.938, -1.25477)
+texture = ExtResource("5_ujx4e")
