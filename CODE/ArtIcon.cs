@@ -13,7 +13,7 @@ public partial class ArtIcon : Control
 
     public string _id;
     public string _title;
-    public short _rating;
+    public float _rating;
     public string[] _tags;
     public string _locationPurchased;
     public float _width;
@@ -36,6 +36,7 @@ public partial class ArtIcon : Control
         _art.Texture = ResourceLoader.Load(String.Format("res://ART/Your Art Here/{0}.JPG", artDetails[0])) as Texture2D;
         _title = artDetails[1];
         _id = artDetails[0];
+        _rating = 1.0f;
     }
 
     public void ArtTexture(ArtIcon artIcon)
@@ -81,7 +82,7 @@ public partial class ArtIcon : Control
 
         _id = artDetails["id"].AsString();
         _locationPurchased = artDetails["locationPurchased"].AsString();
-        _rating = (short)artDetails["rating"];
+        _rating = (float)artDetails["rating"];
         _tags = artDetails["tags"].AsStringArray();
         _title = artDetails["title"].AsString();
     }

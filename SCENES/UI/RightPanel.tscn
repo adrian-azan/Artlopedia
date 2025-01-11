@@ -76,12 +76,24 @@ scale = Vector2(1.167, 1)
 script = ExtResource("1_6iyby")
 
 [node name="ArtTitle" parent="." instance=ExtResource("1_qjsnb")]
+focus_neighbor_left = NodePath("../StarRating")
+focus_neighbor_right = NodePath("../ArtId")
 
 [node name="ArtId" parent="." instance=ExtResource("2_o2h0e")]
-position = Vector2(277, 20)
+offset_left = 277.0
+offset_top = 20.0
+offset_right = 277.0
+offset_bottom = 20.0
+focus_neighbor_left = NodePath("../ArtTitle")
+focus_neighbor_right = NodePath("../StarRating")
 
 [node name="StarRating" parent="." instance=ExtResource("3_p7cer")]
-position = Vector2(509, 21)
+offset_left = 509.0
+offset_top = 21.0
+offset_right = 509.0
+offset_bottom = 21.0
+focus_neighbor_left = NodePath("../ArtId")
+focus_neighbor_right = NodePath("../ArtTitle")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 offset_left = -630.0
@@ -106,10 +118,3 @@ visible = false
 libraries = {
 "": SubResource("AnimationLibrary_w7lco")
 }
-
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
-offset_left = -460.0
-offset_top = -30.0
-offset_right = -420.0
-offset_bottom = 17.165
-scale = Vector2(29.2, 16.24)

@@ -51,6 +51,28 @@ public partial class RootWindow : Node2D
             }
         }
 
+        if (_state == State.Icon && Input.IsActionJustPressed("West RightThumb"))
+        {
+            _state = State.Details;
+            GetNode<Control>("RightPanel/ArtTitle").GrabFocus();
+        }
+        else if (_state == State.Details && Input.IsActionJustPressed("West RightThumb"))
+        {
+            _state = State.Icon;
+            GetViewport().GuiReleaseFocus();
+        }
+
+        if (_state == State.Details)
+        {
+            var guiFocus = GetViewport().GuiGetFocusOwner() as DetailsIcon;
+            if (guiFocus != null)
+            {
+                guiFocus.Highlight();
+                _rightPanel.ProcessInput(_iconCollection.FocusedArtIcon());
+            }
+        }
+
+        //SYNCING CONTROLS
         if (Input.IsActionJustPressed("UploadArt"))
         {
             Array<Dictionary> requestItems = new Array<Dictionary>();
