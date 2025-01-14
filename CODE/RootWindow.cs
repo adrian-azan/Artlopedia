@@ -1,12 +1,21 @@
+using Amazon.Runtime.Internal;
 using Godot;
 using Godot.Collections;
 using System;
+using System.Reflection.Metadata.Ecma335;
 
 public partial class RootWindow : Node2D
 {
     private IconCollection _iconCollection;
     private RightPanel _rightPanel;
     private HttpRequestHandler _httpRequestHandler;
+
+    public enum SavePreference
+    {
+        Local,
+        Remote,
+        Both
+    };
 
     private enum State
     {
@@ -17,13 +26,18 @@ public partial class RootWindow : Node2D
 
     private State _state;
 
+    [Export]
+    public SavePreference _savePreference = SavePreference.Local;
+
     public override void _Ready()
     {
         _iconCollection = GetNode<IconCollection>("IconCollection");
         _rightPanel = GetNode<RightPanel>("RightPanel");
+
         _httpRequestHandler = GetNode<HttpRequestHandler>("HttpRequestHandler");
         _httpRequestHandler.RequestCompleted += ProcessCompletedRequest;
-        _httpRequestHandler.GET(); //Retrieve Art details on start of program
+
+        LoadAllArt();
 
         _state = State.Icon;
     }
@@ -42,32 +56,31 @@ public partial class RootWindow : Node2D
                 _state = State.ArtFocused;
             }
         }
-        else if (_state == State.ArtFocused && _rightPanel.Busy() == false)
+        else if (_state == State.ArtFocused && _rightPanel.Busy() == false && Input.IsActionJustPressed("East RightThumb"))
         {
-            if (Input.IsActionJustPressed("East RightThumb"))
-            {
-                _rightPanel.UnFocus3DView();
-                _state = State.Icon;
-            }
+            _rightPanel.UnFocus3DView();
+            _state = State.Icon;
         }
 
-        if (_state == State.Icon && Input.IsActionJustPressed("West RightThumb"))
+        if (_state == State.Icon && Input.IsActionJustPressed("West RightThumb") && _rightPanel.Busy() == false)
         {
-            _state = State.Details;
             GetNode<Control>("RightPanel/ArtTitle").GrabFocus();
+            _state = State.Details;
         }
-        else if (_state == State.Details && Input.IsActionJustPressed("West RightThumb"))
+        else if (_state == State.Details && Input.IsActionJustPressed("West RightThumb") && _rightPanel.Busy() == false)
         {
-            _state = State.Icon;
             GetViewport().GuiReleaseFocus();
+            _state = State.Icon;
         }
 
         if (_state == State.Details)
         {
-            var guiFocus = GetViewport().GuiGetFocusOwner() as DetailsIcon;
+            var guiFocus = GetViewport().GuiGetFocusOwner() as Control;
             if (guiFocus != null)
             {
-                guiFocus.Highlight();
+                var highlightable = guiFocus as DetailsIcon;
+                if (highlightable != null)
+                    highlightable.Highlight();
                 _rightPanel.ProcessInput(_iconCollection.FocusedArtIcon());
             }
         }
@@ -75,19 +88,35 @@ public partial class RootWindow : Node2D
         //SYNCING CONTROLS
         if (Input.IsActionJustPressed("UploadArt"))
         {
-            Array<Dictionary> requestItems = new Array<Dictionary>();
-            foreach (var art in _iconCollection.AllArt())
-            {
-                requestItems.Add(art.Serialize());
-            }
-
-            _httpRequestHandler.PUT(requestItems);
+            SaveAllArt();
         }
 
         if (Input.IsActionJustPressed("DownloadArt"))
         {
-            _httpRequestHandler.GET();
+            LoadAllArt();
         }
+    }
+
+    public void SaveAllArt()
+    {
+        Array<Dictionary> artIcons = new Array<Dictionary>();
+        foreach (var art in _iconCollection.AllArt())
+        {
+            artIcons.Add(art.Serialize());
+        }
+
+        if (_savePreference == SavePreference.Remote || _savePreference == SavePreference.Both)
+            _httpRequestHandler.PUT(artIcons);
+        else if (_savePreference == SavePreference.Local || _savePreference == SavePreference.Both)
+            _iconCollection.SAVE(artIcons);
+    }
+
+    public void LoadAllArt()
+    {
+        if (_savePreference == SavePreference.Remote || _savePreference == SavePreference.Both)
+            _httpRequestHandler.GET();
+        else if (_savePreference == SavePreference.Local || _savePreference == SavePreference.Both)
+            _iconCollection.LOAD();
     }
 
     public void ProcessCompletedRequest(long result, long responseCode, string[] headers, byte[] body)

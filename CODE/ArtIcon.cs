@@ -31,14 +31,6 @@ public partial class ArtIcon : Control
         _normal = ResourceLoader.Load("res://ART/UI/ArtBackground.png") as Texture2D;
     }
 
-    public void Init(string[] artDetails)
-    {
-        _art.Texture = ResourceLoader.Load(String.Format("res://ART/Your Art Here/{0}.JPG", artDetails[0])) as Texture2D;
-        _title = artDetails[1];
-        _id = artDetails[0];
-        _rating = 1.0f;
-    }
-
     public void ArtTexture(ArtIcon artIcon)
     {
         _art.Texture = artIcon._art.Texture;
@@ -85,6 +77,7 @@ public partial class ArtIcon : Control
         _rating = (float)artDetails["rating"];
         _tags = artDetails["tags"].AsStringArray();
         _title = artDetails["title"].AsString();
+        _art.Texture = ResourceLoader.Load(String.Format("res://ART/Your Art Here/{0}.JPG", _id)) as Texture2D;
     }
 
     public Dictionary Serialize()

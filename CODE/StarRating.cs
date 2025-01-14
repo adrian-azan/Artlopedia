@@ -14,7 +14,6 @@ public partial class StarRating : DetailsIcon
 
     public void UpdateGui()
     {
-        var tempRating = _rating;
         var starSprites = GetChildren();
 
         foreach (Sprite2D filledStar in starSprites.Take((int)_rating))
@@ -27,6 +26,7 @@ public partial class StarRating : DetailsIcon
             emptyStar.Texture = ResourceLoader.Load<Texture2D>("res://ART/UI/EmptyStar.png");
         }
 
+        //if rating has a half score, set halfStar
         if (_rating != (int)_rating)
         {
             (starSprites[(int)_rating] as Sprite2D).Texture = ResourceLoader.Load<Texture2D>("res://ART/UI/HalfStar.png");

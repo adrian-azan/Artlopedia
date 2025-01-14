@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://mo02sw5hpvph"]
+[gd_scene load_steps=12 format=3 uid="uid://mo02sw5hpvph"]
 
 [ext_resource type="Script" path="res://CODE/RightPanel.cs" id="1_6iyby"]
 [ext_resource type="PackedScene" uid="uid://bun4786lcjrqy" path="res://SCENES/UI/ArtTitle.tscn" id="1_qjsnb"]
+[ext_resource type="PackedScene" uid="uid://oqdkwxt2dys5" path="res://SCENES/UI/KeyboardInput.tscn" id="2_25g1h"]
 [ext_resource type="PackedScene" uid="uid://c34d7twrflrjj" path="res://SCENES/UI/ArtID.tscn" id="2_o2h0e"]
 [ext_resource type="PackedScene" uid="uid://cff7akcio5o7" path="res://SCENES/UI/StarRating.tscn" id="3_p7cer"]
 [ext_resource type="PackedScene" uid="uid://bhdrmhmpfwu8" path="res://SCENES/Rooms/Kitchen.tscn" id="5_4382u"]
@@ -75,6 +76,15 @@ _data = {
 scale = Vector2(1.167, 1)
 script = ExtResource("1_6iyby")
 
+[node name="KeyboardInput" parent="." instance=ExtResource("2_25g1h")]
+visible = false
+z_index = 100
+offset_left = 92.545
+offset_top = 166.0
+offset_right = 92.545
+offset_bottom = 166.0
+scale = Vector2(1.62, 1.62)
+
 [node name="ArtTitle" parent="." instance=ExtResource("1_qjsnb")]
 focus_neighbor_left = NodePath("../StarRating")
 focus_neighbor_right = NodePath("../ArtId")
@@ -102,6 +112,7 @@ offset_right = 1290.0
 offset_bottom = 800.0
 scale = Vector2(0.3, 0.3)
 pivot_offset = Vector2(960, 540)
+mouse_filter = 2
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
