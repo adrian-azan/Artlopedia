@@ -52,8 +52,8 @@ public partial class Camera_Panning : Camera
         if (_rng.RandiRange(0, 1) == 0)
             side = -1;
 
-        _camera.Position = new Vector3(subjectX + _rng.RandiRange(side * 4, side * 8), subjectY + _rng.RandiRange(-9, 0), 0);
-        _cameraEndPosition = new Vector3(-_camera.Position.X, subjectY + _rng.RandiRange(-9, 0), 0);
+        _camera.Position = new Vector3(subjectX + _rng.RandiRange(side * 4, side * 8), subjectY + _rng.RandiRange(-9, 0), 1);
+        _cameraEndPosition = new Vector3(-_camera.Position.X, subjectY + _rng.RandiRange(-9, 0), 1);
         _cameraStartPosition = _camera.Position;
 
         _zRadius = _rng.RandiRange(2, 6);

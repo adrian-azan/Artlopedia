@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2w26aw448b0e"]
+[gd_scene load_steps=6 format=3 uid="uid://d2w26aw448b0e"]
 
 [ext_resource type="Script" path="res://CODE/PortView3D.cs" id="1_ckpyq"]
 [ext_resource type="PackedScene" uid="uid://bhawtfetnd0l2" path="res://SCENES/Camera.tscn" id="2_fltm4"]
 [ext_resource type="Script" path="res://CODE/Camera_Panning.cs" id="3_hlfs5"]
 [ext_resource type="PackedScene" uid="uid://b0jcbn4w1p0nc" path="res://ART/MODELS/RoomTiled.gltf" id="3_ullht"]
 [ext_resource type="PackedScene" uid="uid://bg6yw0k3glju1" path="res://SCENES/Easel.tscn" id="4_sess8"]
-[ext_resource type="Texture2D" path="res://ART/Your Art Here/4A.JPG" id="5_ujx4e"]
 
 [node name="Spotlight" type="Node3D"]
 transform = Transform3D(2.15, 0, 0, 0, 2.15, 0, 0, 0, 2.15, 0, 0, 0)
@@ -13,6 +12,13 @@ script = ExtResource("1_ckpyq")
 
 [node name="Camera" parent="." instance=ExtResource("2_fltm4")]
 script = ExtResource("3_hlfs5")
+
+[node name="Camera3D" parent="Camera" index="0"]
+transform = Transform3D(0.465116, 0, 0, 0, 0.465116, 0, 0, 0, 0.465116, -4.89588, 8.305, 4.89588)
+
+[node name="MeshInstance3D" parent="Camera/Camera3D" index="0"]
+visible = true
+transparency = 0.0
 
 [node name="default2" parent="." instance=ExtResource("3_ullht")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.157602, -23.8485)
@@ -43,4 +49,5 @@ spot_angle = 12.215
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(-6.55671e-09, 0.15, 0, -0.134819, -5.89313e-09, 0.0657557, 0.0657557, 2.87427e-09, 0.134819, 0, 8.938, -1.25477)
-texture = ExtResource("5_ujx4e")
+
+[editable path="Camera"]

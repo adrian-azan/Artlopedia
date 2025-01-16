@@ -76,6 +76,7 @@ fov = 50.0
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 0, 0, -1.32115)
 visible = false
+transparency = 0.4
 mesh = SubResource("PlaneMesh_yyncb")
 surface_material_override/0 = SubResource("StandardMaterial3D_1esa5")
 
