@@ -12,7 +12,6 @@ public partial class IconCollection : Node
     private int _lastFilledRow;
     private Array<VBoxContainer> _allIcons;
     private PortView3D _portView3D;
-    private static Dictionary DEFAULT_DETAILS;
 
     public override void _Ready()
     {
@@ -20,23 +19,6 @@ public partial class IconCollection : Node
         col = 0;
         _portView3D = Tools.GetChild<PortView3D>(GetNode(".."));
         _allIcons = Variant.From(GetNode("HBoxContainer").GetChildren()).AsGodotArray<VBoxContainer>();
-
-        DEFAULT_DETAILS = new Dictionary();
-        Dictionary output = new Dictionary();
-        Dictionary dimensions = new Dictionary();
-        dimensions.Add("width", 0);
-        dimensions.Add("height", 0);
-        Dictionary orientation = new Dictionary();
-        orientation.Add("2D", 0);
-        orientation.Add("3D", 0);
-
-        output.Add("title", "");
-        output.Add("id", "00");
-        output.Add("rating", 2.5);
-        output.Add("tags", new string[0]);
-        output.Add("locationPurchased", "");
-        output.Add("dimensions", dimensions);
-        output.Add("orientation", orientation);
 
         InitIcons();
     }
@@ -52,40 +34,43 @@ public partial class IconCollection : Node
 
             FileAccess fa = FileAccess.Open(String.Format("res://ART/Your Art Here/Details/{0}.txt", artId.Split(".")[0]), FileAccess.ModeFlags.Read);
             if (fa != null)
-                artDetails = Json.ParseString(fa.GetAsText(true)).AsGodotDictionary();
+                artDetails = Json.ParseString(fa.GetAsText()).AsGodotDictionary();
             else
             {
-                artDetails = DEFAULT_DETAILS;
+                artDetails = new Dictionary();
+                Dictionary dimensionsDefault = new Dictionary();
+                dimensionsDefault.Add("width", 0);
+                dimensionsDefault.Add("height", 0);
+                Dictionary orientationDefault = new Dictionary();
+                orientationDefault.Add("2D", 0);
+                orientationDefault.Add("3D", 0);
+
+                artDetails.Add("title", "");
+                artDetails.Add("id", "00");
+                artDetails.Add("rating", 2.5);
+                artDetails.Add("tags", new string[0]);
+                artDetails.Add("locationPurchased", "");
+                artDetails.Add("dimensions", dimensionsDefault);
+                artDetails.Add("orientation", orientationDefault);
+
                 var rng = new RandomNumberGenerator();
                 string id;
                 do
                 {
-                    id = rng.RandiRange(0, 4095).ToString();
-                } while (FileAccess.Open(String.Format("res://ART/Your Art Here/Details/{0}.txt", id), FileAccess.ModeFlags.Read) != null);
+                    id = rng.RandiRange(0, 4095).ToString("X");
+                } while (FileAccess.FileExists(String.Format("res://ART/Your Art Here/Details/{0}.txt", id)));
 
                 artDetails["id"] = id;
+                DirAccess.RenameAbsolute(String.Format("res://ART/Your Art Here/{0}", artId), String.Format("res://ART/Your Art Here/{0}.JPG", id));
+                DirAccess.RenameAbsolute(String.Format("res://ART/Your Art Here/{0}.import", artId), String.Format("res://ART/Your Art Here/{0}.JPG.import", id));
+                var newDetails = FileAccess.Open(String.Format("res://ART/Your Art Here/Details/{0}.txt", id), FileAccess.ModeFlags.Write);
+                newDetails.Close();
             }
 
             ArtIcon artIcon = ResourceLoader.Load<PackedScene>("res://SCENES/UI/ArtIcon.tscn").Instantiate() as ArtIcon;
             _allIcons[columnToAddTo++].AddChild(artIcon);
 
-            Dictionary output = new Dictionary();
-            Dictionary dimensions = new Dictionary();
-            dimensions.Add("width", artDetails["dimensions"].AsGodotDictionary()["width"]);
-            dimensions.Add("height", artDetails["dimensions"].AsGodotDictionary()["height"]);
-            Dictionary orientation = new Dictionary();
-            orientation.Add("2D", artDetails["orientation"].AsGodotDictionary()["2D"]);
-            orientation.Add("3D", artDetails["orientation"].AsGodotDictionary()["3D"]);
-
-            output.Add("title", artDetails["title"]);
-            output.Add("id", artId.Split(".")[0]);
-            output.Add("rating", artDetails["rating"]);
-            output.Add("tags", artDetails["tags"]);
-            output.Add("locationPurchased", artDetails["locationPurchased"]);
-            output.Add("dimensions", dimensions);
-            output.Add("orientation", orientation);
-
-            artIcon.Deserialize(output);
+            artIcon.Deserialize(artDetails);
             columnToAddTo %= _allIcons.Count;
         }
 
@@ -138,6 +123,7 @@ public partial class IconCollection : Node
         {
             using var fout = FileAccess.Open(String.Format("res://ART/Your Art Here/Details/{0}.txt", art["id"]), FileAccess.ModeFlags.Write);
             fout.StoreString(Json.Stringify(art, "\t"));
+            fout.Close();
         }
     }
 

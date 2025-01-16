@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://CODE/Camera_Panning.cs" id="3_hlfs5"]
 [ext_resource type="PackedScene" uid="uid://b0jcbn4w1p0nc" path="res://ART/MODELS/RoomTiled.gltf" id="3_ullht"]
 [ext_resource type="PackedScene" uid="uid://bg6yw0k3glju1" path="res://SCENES/Easel.tscn" id="4_sess8"]
-[ext_resource type="Texture2D" uid="uid://df0wm38uwcqbt" path="res://ART/Your Art Here/4A.JPG" id="5_ujx4e"]
+[ext_resource type="Texture2D" path="res://ART/Your Art Here/4A.JPG" id="5_ujx4e"]
 
 [node name="Spotlight" type="Node3D"]
 transform = Transform3D(2.15, 0, 0, 0, 2.15, 0, 0, 0, 2.15, 0, 0, 0)

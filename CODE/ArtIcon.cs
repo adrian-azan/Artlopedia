@@ -77,6 +77,7 @@ public partial class ArtIcon : Control
         _rating = (float)artDetails["rating"];
         _tags = artDetails["tags"].AsStringArray();
         _title = artDetails["title"].AsString();
+
         _art.Texture = ResourceLoader.Load(String.Format("res://ART/Your Art Here/{0}.JPG", _id)) as Texture2D;
     }
 

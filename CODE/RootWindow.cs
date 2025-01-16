@@ -37,6 +37,7 @@ public partial class RootWindow : Node2D
         _httpRequestHandler = GetNode<HttpRequestHandler>("HttpRequestHandler");
         _httpRequestHandler.RequestCompleted += ProcessCompletedRequest;
 
+        SaveAllArt();
         LoadAllArt();
 
         _state = State.Icon;

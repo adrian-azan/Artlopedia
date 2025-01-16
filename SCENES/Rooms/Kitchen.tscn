@@ -2,15 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://ckwn20cvxrgdv" path="res://ART/MODELS/Kitchen.gltf" id="1_bpoe1"]
 [ext_resource type="Script" path="res://CODE/PortView3D.cs" id="1_l8ju2"]
-[ext_resource type="Texture2D" uid="uid://df0wm38uwcqbt" path="res://ART/Your Art Here/4A.JPG" id="2_klw06"]
+[ext_resource type="Texture2D" path="res://ART/Your Art Here/4A.JPG" id="2_klw06"]
 [ext_resource type="Script" path="res://CODE/Camera_Tripod.cs" id="3_60bfe"]
-[ext_resource type="Texture2D" uid="uid://vbh3afs2hj6t" path="res://ART/Your Art Here/4B.JPG" id="3_kjvjy"]
-[ext_resource type="Texture2D" uid="uid://cp1h3ld4jylj1" path="res://ART/Your Art Here/13.JPG" id="4_ldhvh"]
-[ext_resource type="Texture2D" uid="uid://cl3lgsp26judt" path="res://ART/Your Art Here/5D.JPG" id="5_7bbgu"]
-[ext_resource type="Texture2D" uid="uid://ciyv4nyx27iml" path="res://ART/Your Art Here/14.JPG" id="6_fbe0a"]
-[ext_resource type="Texture2D" uid="uid://dlc7k3m48jvx" path="res://ART/Your Art Here/79.JPG" id="7_okthn"]
+[ext_resource type="Texture2D" path="res://ART/Your Art Here/4B.JPG" id="3_kjvjy"]
+[ext_resource type="Texture2D" path="res://ART/Your Art Here/13.JPG" id="4_ldhvh"]
+[ext_resource type="Texture2D" path="res://ART/Your Art Here/5D.JPG" id="5_7bbgu"]
+[ext_resource type="Texture2D" path="res://ART/Your Art Here/14.JPG" id="6_fbe0a"]
+[ext_resource type="Texture2D" path="res://ART/Your Art Here/79.JPG" id="7_okthn"]
 [ext_resource type="PackedScene" uid="uid://bhawtfetnd0l2" path="res://SCENES/Camera.tscn" id="8_2choi"]
-[ext_resource type="Texture2D" uid="uid://csacbvmes7a50" path="res://ART/Your Art Here/BB.JPG" id="8_85m06"]
+[ext_resource type="Texture2D" path="res://ART/Your Art Here/BB.JPG" id="8_85m06"]
 
 [node name="Kitchen" type="Node3D"]
 transform = Transform3D(2.15, 0, 0, 0, 2.15, 0, 0, 0, 2.15, 0, 0, 0)
