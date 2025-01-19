@@ -3,10 +3,14 @@ using Godot.Collections;
 using System;
 using System.Linq;
 
-public partial class IconCollection : Node
+public partial class IconCollection : Node2D
 {
     private int row;
     private int col;
+    private float totalLength;
+
+    private Vector2 _originalPos;
+    private AnimationPlayer _animationPlayer;
 
     private int _lastFilledCol;
     private int _lastFilledRow;
@@ -19,8 +23,12 @@ public partial class IconCollection : Node
         col = 0;
         _portView3D = Tools.GetChild<PortView3D>(GetNode(".."));
         _allIcons = Variant.From(GetNode("HBoxContainer").GetChildren()).AsGodotArray<VBoxContainer>();
+        _originalPos = Position;
+
+        _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
         InitIcons();
+        totalLength = -75 * (_allIcons[col].GetChildren().Count - 4);
     }
 
     private void InitIcons()
@@ -188,7 +196,13 @@ public partial class IconCollection : Node
 
         row += 1;
         if (row >= _allIcons[col].GetChildren().Count)
+        {
             row = 0;
+            Position = _originalPos;
+        }
+
+        if ((_allIcons[col].GetChildren()[row] as ArtIcon).GlobalPosition.Y >= 300)
+            CreateTween().TweenProperty(this, "position", new Vector2(Position.X, Position.Y - 100), .2);
 
         (_allIcons[col].GetChildren()[row] as ArtIcon).Highlight();
     }
@@ -199,7 +213,13 @@ public partial class IconCollection : Node
 
         row -= 1;
         if (row < 0)
+        {
             row = _allIcons[col].GetChildren().Count - 1;
+            Position = _originalPos + new Vector2(0, -75 * (_allIcons[col].GetChildren().Count - 4));
+        }
+
+        if ((_allIcons[col].GetChildren()[row] as ArtIcon).GlobalPosition.Y <= -400)
+            CreateTween().TweenProperty(this, "position", new Vector2(Position.X, Position.Y + 100), .2);
 
         (_allIcons[col].GetChildren()[row] as ArtIcon).Highlight();
     }

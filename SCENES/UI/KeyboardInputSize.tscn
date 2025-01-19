@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://orwe8thc52t8"]
+
+[ext_resource type="Texture2D" uid="uid://clxn6s78pbyfq" path="res://ART/UI/TitleBackground.png" id="1_vmpwi"]
+[ext_resource type="Texture2D" uid="uid://dp7xd2fe05oup" path="res://ART/UI/DimensionsGuide.png" id="2_lkliy"]
+[ext_resource type="FontFile" uid="uid://bap4pqwq0wokt" path="res://ART/THEMES/pikmin_by_theadorableoshawott-da33cfr.ttf" id="3_8omcl"]
+
+[node name="KeyboardInputSize" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(115, 68)
+scale = Vector2(0.865, 0.93)
+texture = ExtResource("1_vmpwi")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(118, 248)
+scale = Vector2(0.88, 1.785)
+texture = ExtResource("1_vmpwi")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(114, 212)
+scale = Vector2(4.17143, 3.8)
+texture = ExtResource("2_lkliy")
+
+[node name="Height" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = -11.0
+offset_top = 27.0
+offset_right = 93.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(0.972549, 0.372549, 0.580392, 1)
+theme_override_fonts/font = ExtResource("3_8omcl")
+theme_override_font_sizes/font_size = 28
+text = "2"
+max_length = 40
+
+[node name="Width" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 136.265
+offset_top = 27.0
+offset_right = 218.265
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(0.403922, 0.521569, 0.815686, 1)
+theme_override_fonts/font = ExtResource("3_8omcl")
+theme_override_font_sizes/font_size = 28
+text = "2"
+max_length = 40
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 102.0
+offset_top = 40.0
+offset_right = 142.0
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "X"

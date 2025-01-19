@@ -11,18 +11,18 @@ focus_mode = 2
 script = ExtResource("1_i5d4y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(118, 47)
-scale = Vector2(0.7, 0.7)
+position = Vector2(118.5, 48.5)
+scale = Vector2(0.7125, 0.755)
 texture = ExtResource("1_mfu0g")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 4.0
-offset_right = 211.1
-offset_bottom = 60.0
+offset_left = 9.0
+offset_top = -2.0
+offset_right = 210.1
+offset_bottom = 66.0
 theme_override_fonts/normal_font = ExtResource("2_0xvjn")
-theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/normal_font_size = 29
 text = "Blue Berry sucker punch"
 fit_content = true
 scroll_active = false

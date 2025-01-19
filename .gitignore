@@ -407,3 +407,5 @@ FodyWeavers.xsd
 /Properties
 /DOCUMENTATION
 CODE/config.json
+/EXPORT
+export_presets.cfg

@@ -1,15 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://cff7akcio5o7"]
+[gd_scene load_steps=6 format=3 uid="uid://cff7akcio5o7"]
 
 [ext_resource type="Texture2D" uid="uid://kphgfv0sggv8" path="res://ART/UI/FullStar.png" id="1_7p40t"]
 [ext_resource type="Script" path="res://CODE/StarRating.cs" id="1_cw22w"]
 [ext_resource type="Texture2D" uid="uid://wm5ht1gwc56p" path="res://ART/UI/HalfStar.png" id="2_nh0ak"]
 [ext_resource type="Texture2D" uid="uid://lrdtynnjd1kl" path="res://ART/UI/EmptyStar.png" id="3_y48bn"]
+[ext_resource type="Texture2D" uid="uid://dealmcpk41gh6" path="res://ART/UI/Highlight.png" id="5_t42ok"]
 
 [node name="StarRating" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 focus_mode = 2
 script = ExtResource("1_cw22w")
+
+[node name="Highlight" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(72, 13)
+scale = Vector2(1.31094, 0.608929)
+texture = ExtResource("5_t42ok")
 
 [node name="Star1" type="Sprite2D" parent="."]
 texture = ExtResource("1_7p40t")

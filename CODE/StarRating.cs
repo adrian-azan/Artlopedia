@@ -15,6 +15,7 @@ public partial class StarRating : DetailsIcon
     public void UpdateGui()
     {
         var starSprites = GetChildren();
+        starSprites.RemoveAt(0);
 
         foreach (Sprite2D filledStar in starSprites.Take((int)_rating))
         {
@@ -31,6 +32,16 @@ public partial class StarRating : DetailsIcon
         {
             (starSprites[(int)_rating] as Sprite2D).Texture = ResourceLoader.Load<Texture2D>("res://ART/UI/HalfStar.png");
         }
+    }
+
+    public override void Highlight()
+    {
+        GetNode<Sprite2D>("Highlight").Visible = true;
+    }
+
+    public override void UnHighlight()
+    {
+        GetNode<Sprite2D>("Highlight").Visible = false;
     }
 
     public void SetRating(float rating)

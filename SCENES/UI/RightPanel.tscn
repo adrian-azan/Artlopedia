@@ -1,12 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://mo02sw5hpvph"]
+[gd_scene load_steps=14 format=3 uid="uid://mo02sw5hpvph"]
 
 [ext_resource type="Script" path="res://CODE/RightPanel.cs" id="1_6iyby"]
 [ext_resource type="PackedScene" uid="uid://bun4786lcjrqy" path="res://SCENES/UI/ArtTitle.tscn" id="1_qjsnb"]
 [ext_resource type="PackedScene" uid="uid://oqdkwxt2dys5" path="res://SCENES/UI/KeyboardInput.tscn" id="2_25g1h"]
+[ext_resource type="PackedScene" uid="uid://orwe8thc52t8" path="res://SCENES/UI/KeyboardInputSize.tscn" id="2_lqpjn"]
 [ext_resource type="PackedScene" uid="uid://c34d7twrflrjj" path="res://SCENES/UI/ArtID.tscn" id="2_o2h0e"]
 [ext_resource type="PackedScene" uid="uid://cff7akcio5o7" path="res://SCENES/UI/StarRating.tscn" id="3_p7cer"]
 [ext_resource type="PackedScene" uid="uid://bhdrmhmpfwu8" path="res://SCENES/Rooms/Kitchen.tscn" id="5_4382u"]
 [ext_resource type="PackedScene" uid="uid://d2w26aw448b0e" path="res://SCENES/Rooms/Spotlight.tscn" id="6_lku0f"]
+[ext_resource type="PackedScene" uid="uid://c6uqrogcd46w7" path="res://SCENES/UI/ArtSize.tscn" id="8_ljwfm"]
 
 [sub_resource type="Animation" id="Animation_6f1xb"]
 resource_name = "Grow"
@@ -76,6 +78,15 @@ _data = {
 scale = Vector2(1.167, 1)
 script = ExtResource("1_6iyby")
 
+[node name="KeyboardInputSize" parent="." instance=ExtResource("2_lqpjn")]
+visible = false
+z_index = 100
+offset_left = 148.243
+offset_top = 79.0
+offset_right = 148.243
+offset_bottom = 79.0
+scale = Vector2(1.555, 1.555)
+
 [node name="KeyboardInput" parent="." instance=ExtResource("2_25g1h")]
 visible = false
 z_index = 100
@@ -96,6 +107,7 @@ offset_right = 277.0
 offset_bottom = 20.0
 focus_neighbor_left = NodePath("../ArtTitle")
 focus_neighbor_right = NodePath("../StarRating")
+focus_neighbor_bottom = NodePath("../ArtSize")
 
 [node name="StarRating" parent="." instance=ExtResource("3_p7cer")]
 offset_left = 509.0
@@ -104,6 +116,14 @@ offset_right = 509.0
 offset_bottom = 21.0
 focus_neighbor_left = NodePath("../ArtId")
 focus_neighbor_right = NodePath("../ArtTitle")
+focus_neighbor_bottom = NodePath("../ArtSize")
+
+[node name="ArtSize" parent="." instance=ExtResource("8_ljwfm")]
+offset_left = 9.42587
+offset_top = 451.0
+offset_right = 9.42587
+offset_bottom = 451.0
+focus_neighbor_top = NodePath("../ArtTitle")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 offset_left = -630.0

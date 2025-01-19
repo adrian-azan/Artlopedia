@@ -12,13 +12,13 @@ public partial class DetailsIcon : Control
         _highlighted = ResourceLoader.Load<Texture2D>("res://ART/UI/TitleBackground Highlighted.png");
     }
 
-    public void Highlight()
+    public virtual void Highlight()
     {
         if (_highlighted == null) return;
         GetNode<Sprite2D>("Sprite2D").Texture = _highlighted;
     }
 
-    public void UnHighlight()
+    public virtual void UnHighlight()
     {
         if (_normal == null) return;
         GetNode<Sprite2D>("Sprite2D").Texture = _normal;

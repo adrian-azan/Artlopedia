@@ -8,9 +8,12 @@ public partial class RightPanel : Node2D
 
     private RichTextLabel _artTitle;
     private RichTextLabel _artId;
+    private RichTextLabel _artHeight;
+    private RichTextLabel _artWidth;
     private StarRating _starRating;
 
     private Control _keyboardInput;
+    private Control _keyboardInputSize;
 
     private AnimationPlayer _animationPlayer;
     private bool _typing;
@@ -23,8 +26,11 @@ public partial class RightPanel : Node2D
 
         _artTitle = GetNode<RichTextLabel>("ArtTitle/RichTextLabel");
         _artId = GetNode<RichTextLabel>("ArtId/Control/ID Number");
+        _artHeight = GetNode<RichTextLabel>("ArtSize/Height");
+        _artWidth = GetNode<RichTextLabel>("ArtSize/Width");
         _starRating = GetNode<StarRating>("StarRating");
         _keyboardInput = GetNode<Control>("KeyboardInput");
+        _keyboardInputSize = GetNode<Control>("KeyboardInputSize");
 
         _animationPlayer = GetNode<AnimationPlayer>("SubViewportContainer/AnimationPlayer");
         _animationPlayer.Stop();
@@ -65,6 +71,10 @@ public partial class RightPanel : Node2D
             _currentFocus._rating = _starRating._rating;
         }
 
+        if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtId") == GetViewport().GuiGetFocusOwner() && _typing == false)
+        {
+        }
+
         if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtTitle") == GetViewport().GuiGetFocusOwner() && _typing == false)
         {
             _typing = true;
@@ -80,7 +90,7 @@ public partial class RightPanel : Node2D
          */
         else if ((Input.IsKeyPressed(Key.Enter) || Input.IsKeyPressed(Key.Escape) ||
             Input.IsActionJustPressed("South RightThumb") || Input.IsActionJustPressed("East RightThumb"))
-            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace))
+            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) && _keyboardInput.GetNode<LineEdit>("LineEdit") == GetViewport().GuiGetFocusOwner())
         {
             _typing = false;
             _keyboardInput.Visible = false;
@@ -90,6 +100,35 @@ public partial class RightPanel : Node2D
             {
                 _currentFocus._title = _keyboardInput.GetNode<LineEdit>("LineEdit").Text;
             }
+        }
+
+        if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtSize") == GetViewport().GuiGetFocusOwner() && _typing == false)
+        {
+            _typing = true;
+            _keyboardInputSize.Visible = true;
+            _keyboardInputSize.GetNode<LineEdit>("Width").GrabFocus();
+            _keyboardInputSize.GetNode<LineEdit>("Width").Text = _currentFocus._width.ToString();
+            _keyboardInputSize.GetNode<LineEdit>("Height").Text = _currentFocus._height.ToString();
+        }
+        else if ((Input.IsKeyPressed(Key.Enter) || Input.IsKeyPressed(Key.Escape) ||
+          Input.IsActionJustPressed("South RightThumb") || Input.IsActionJustPressed("East RightThumb"))
+          && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) &&
+          (_keyboardInputSize.GetNode<LineEdit>("Width") == GetViewport().GuiGetFocusOwner() || _keyboardInputSize.GetNode<LineEdit>("Height") == GetViewport().GuiGetFocusOwner()))
+        {
+            _typing = false;
+            _keyboardInputSize.Visible = false;
+            GetNode<Control>("ArtSize").GrabFocus();
+
+            if (!Input.IsActionJustPressed("East RightThumb") && !Input.IsKeyPressed(Key.Escape))
+            {
+                _currentFocus._width = _keyboardInputSize.GetNode<LineEdit>("Width").Text.ToInt();
+                _currentFocus._height = _keyboardInputSize.GetNode<LineEdit>("Height").Text.ToInt();
+            }
+        }
+
+        if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtTags") == GetViewport().GuiGetFocusOwner() && _typing == false)
+        {
+            _typing = true;
         }
     }
 
@@ -114,5 +153,7 @@ public partial class RightPanel : Node2D
         _artTitle.Text = currentFocus._title;
         _artId.Text = currentFocus._id;
         _starRating.SetRating(currentFocus._rating);
+        _artHeight.Text = currentFocus._height.ToString();
+        _artWidth.Text = currentFocus._width.ToString();
     }
 }

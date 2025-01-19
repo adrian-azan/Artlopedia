@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dueik6aeov56h"]
+
+[ext_resource type="Script" path="res://CODE/DetailsIcon.cs" id="1_cmjhw"]
+[ext_resource type="Texture2D" uid="uid://clxn6s78pbyfq" path="res://ART/UI/TitleBackground.png" id="2_snb1f"]
+
+[node name="ArtTags" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+focus_mode = 2
+script = ExtResource("1_cmjhw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(134.5, 79.5)
+scale = Vector2(0.8275, 1.395)
+texture = ExtResource("2_snb1f")
+
+[node name="HFlowContainer" type="HFlowContainer" parent="."]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 1.0
+offset_right = 245.0
+offset_bottom = 102.0
