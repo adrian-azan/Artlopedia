@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System;
 
 public partial class RightPanel : Node2D
 {
@@ -73,6 +74,23 @@ public partial class RightPanel : Node2D
 
         if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtId") == GetViewport().GuiGetFocusOwner() && _typing == false)
         {
+            _typing = true;
+            _keyboardInput.Visible = true;
+            _keyboardInput.GetNode<LineEdit>("LineEdit").GrabFocus();
+            _keyboardInput.GetNode<LineEdit>("LineEdit").Text = _currentFocus._id;
+        }
+        else if ((Input.IsKeyPressed(Key.Enter) || Input.IsKeyPressed(Key.Escape) ||
+            Input.IsActionJustPressed("South RightThumb") || Input.IsActionJustPressed("East RightThumb"))
+            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) && _keyboardInput.GetNode<LineEdit>("LineEdit") == GetViewport().GuiGetFocusOwner())
+        {
+            _typing = false;
+            _keyboardInput.Visible = false;
+            GetNode<Control>("ArtId").GrabFocus();
+
+            if (!Input.IsActionJustPressed("East RightThumb") && !Input.IsKeyPressed(Key.Escape) && ValidId(_keyboardInput.GetNode<LineEdit>("LineEdit").Text))
+            {
+                _currentFocus._id = _keyboardInput.GetNode<LineEdit>("LineEdit").Text.ToUpper();
+            }
         }
 
         if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtTitle") == GetViewport().GuiGetFocusOwner() && _typing == false)
@@ -130,6 +148,14 @@ public partial class RightPanel : Node2D
         {
             _typing = true;
         }
+    }
+
+    private bool ValidId(string id)
+    {
+        if (id == null || id.Length > 3) return false;
+        if (id.IsValidHexNumber() == false) return false;
+        if (FileAccess.FileExists(String.Format("res://ART/Your Art Here/Details/{0}.txt", id))) return false;
+        return true;
     }
 
     public void Focus3DView()
