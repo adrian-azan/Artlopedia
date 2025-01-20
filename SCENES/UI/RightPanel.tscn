@@ -99,6 +99,7 @@ scale = Vector2(1.62, 1.62)
 [node name="ArtTitle" parent="." instance=ExtResource("1_qjsnb")]
 focus_neighbor_left = NodePath("../StarRating")
 focus_neighbor_right = NodePath("../ArtId")
+focus_neighbor_bottom = NodePath("../ArtSize")
 
 [node name="ArtId" parent="." instance=ExtResource("2_o2h0e")]
 offset_left = 277.0
@@ -126,6 +127,7 @@ offset_bottom = 451.0
 focus_neighbor_top = NodePath("../ArtTitle")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+z_index = 50
 offset_left = -630.0
 offset_top = -280.0
 offset_right = 1290.0

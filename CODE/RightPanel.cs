@@ -18,6 +18,7 @@ public partial class RightPanel : Node2D
 
     private AnimationPlayer _animationPlayer;
     private bool _typing;
+    private Node _selectedDetail;
 
     public override void _Ready()
     {
@@ -75,13 +76,14 @@ public partial class RightPanel : Node2D
         if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtId") == GetViewport().GuiGetFocusOwner() && _typing == false)
         {
             _typing = true;
+            _selectedDetail = GetNode("ArtId");
             _keyboardInput.Visible = true;
             _keyboardInput.GetNode<LineEdit>("LineEdit").GrabFocus();
             _keyboardInput.GetNode<LineEdit>("LineEdit").Text = _currentFocus._id;
         }
         else if ((Input.IsKeyPressed(Key.Enter) || Input.IsKeyPressed(Key.Escape) ||
             Input.IsActionJustPressed("South RightThumb") || Input.IsActionJustPressed("East RightThumb"))
-            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) && _keyboardInput.GetNode<LineEdit>("LineEdit") == GetViewport().GuiGetFocusOwner())
+            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) && _selectedDetail == GetNode("ArtId") && _keyboardInput.GetNode<LineEdit>("LineEdit") == GetViewport().GuiGetFocusOwner())
         {
             _typing = false;
             _keyboardInput.Visible = false;
@@ -96,6 +98,7 @@ public partial class RightPanel : Node2D
         if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtTitle") == GetViewport().GuiGetFocusOwner() && _typing == false)
         {
             _typing = true;
+            _selectedDetail = GetNode("ArtTitle");
             _keyboardInput.Visible = true;
             _keyboardInput.GetNode<LineEdit>("LineEdit").GrabFocus();
             _keyboardInput.GetNode<LineEdit>("LineEdit").Text = _currentFocus._title;
@@ -108,7 +111,7 @@ public partial class RightPanel : Node2D
          */
         else if ((Input.IsKeyPressed(Key.Enter) || Input.IsKeyPressed(Key.Escape) ||
             Input.IsActionJustPressed("South RightThumb") || Input.IsActionJustPressed("East RightThumb"))
-            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) && _keyboardInput.GetNode<LineEdit>("LineEdit") == GetViewport().GuiGetFocusOwner())
+            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) && _selectedDetail == GetNode("ArtTitle") && _keyboardInput.GetNode<LineEdit>("LineEdit") == GetViewport().GuiGetFocusOwner())
         {
             _typing = false;
             _keyboardInput.Visible = false;
