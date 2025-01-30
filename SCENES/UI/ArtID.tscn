@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://c34d7twrflrjj"]
+[gd_scene load_steps=4 format=3 uid="uid://c34d7twrflrjj"]
 
 [ext_resource type="Texture2D" uid="uid://clxn6s78pbyfq" path="res://ART/UI/TitleBackground.png" id="1_ivgnd"]
+[ext_resource type="Script" path="res://CODE/DetailsIcon.cs" id="1_urwvq"]
 [ext_resource type="FontFile" uid="uid://bap4pqwq0wokt" path="res://ART/THEMES/pikmin_by_theadorableoshawott-da33cfr.ttf" id="2_rriad"]
 
-[node name="ArtID" type="Node2D"]
+[node name="ArtID" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+focus_mode = 2
+script = ExtResource("1_urwvq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(81, 30)
@@ -11,7 +16,7 @@ scale = Vector2(0.48, 0.48)
 texture = ExtResource("1_ivgnd")
 
 [node name="Control" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 2
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0

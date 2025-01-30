@@ -30,10 +30,10 @@ offset_bottom = -245.0
 scale = Vector2(28.665, 16.4223)
 color = Color(0.663665, 0.306272, 0.51105, 0.533333)
 
-[node name="IconCollection" parent="." instance=ExtResource("1_c53fi")]
-position = Vector2(-553, -301)
-scale = Vector2(2, 2)
-
 [node name="RightPanel" parent="." instance=ExtResource("3_lpm3e")]
 position = Vector2(-114, -299)
 scale = Vector2(1, 0.857)
+
+[node name="IconCollection" parent="." instance=ExtResource("1_c53fi")]
+position = Vector2(-553, -220)
+scale = Vector2(2, 2)

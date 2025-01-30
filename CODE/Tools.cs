@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System;
 
 public static class Tools
 {
@@ -89,5 +90,14 @@ public static class Tools
         var distanceY = Mathf.Abs(pointY - y);
 
         return Mathf.Sqrt(Mathf.Pow(distanceX, 2) + Mathf.Pow(distanceY, 2));
+    }
+
+    //File Tools
+    public static bool ValidId(string id)
+    {
+        if (id == null || id.Length > 3) return false;
+        if (id.IsValidHexNumber() == false) return false;
+        if (FileAccess.FileExists(String.Format("res://ART/Your Art Here/Details/{0}.txt", id))) return false;
+        return true;
     }
 }

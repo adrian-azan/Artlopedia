@@ -2,15 +2,15 @@
 
 [ext_resource type="PackedScene" uid="uid://ckwn20cvxrgdv" path="res://ART/MODELS/Kitchen.gltf" id="1_bpoe1"]
 [ext_resource type="Script" path="res://CODE/PortView3D.cs" id="1_l8ju2"]
-[ext_resource type="Texture2D" uid="uid://df0wm38uwcqbt" path="res://ART/Your Art Here/4A.JPG" id="2_klw06"]
 [ext_resource type="Script" path="res://CODE/Camera_Tripod.cs" id="3_60bfe"]
-[ext_resource type="Texture2D" uid="uid://vbh3afs2hj6t" path="res://ART/Your Art Here/4B.JPG" id="3_kjvjy"]
-[ext_resource type="Texture2D" uid="uid://cp1h3ld4jylj1" path="res://ART/Your Art Here/13.JPG" id="4_ldhvh"]
-[ext_resource type="Texture2D" uid="uid://cl3lgsp26judt" path="res://ART/Your Art Here/5D.JPG" id="5_7bbgu"]
-[ext_resource type="Texture2D" uid="uid://ciyv4nyx27iml" path="res://ART/Your Art Here/14.JPG" id="6_fbe0a"]
-[ext_resource type="Texture2D" uid="uid://dlc7k3m48jvx" path="res://ART/Your Art Here/79.JPG" id="7_okthn"]
+[ext_resource type="Texture2D" uid="uid://cr64of3u3reel" path="res://ART/Your Art Here/38B.JPG" id="5_gojes"]
+[ext_resource type="Texture2D" uid="uid://d0oq30e5kj4n6" path="res://ART/Your Art Here/2BA.JPG" id="6_1ysvi"]
+[ext_resource type="Texture2D" uid="uid://bl8go1a3a28gv" path="res://ART/Your Art Here/B3A.JPG" id="7_d0he5"]
 [ext_resource type="PackedScene" uid="uid://bhawtfetnd0l2" path="res://SCENES/Camera.tscn" id="8_2choi"]
-[ext_resource type="Texture2D" uid="uid://csacbvmes7a50" path="res://ART/Your Art Here/BB.JPG" id="8_85m06"]
+[ext_resource type="Texture2D" uid="uid://b68la7hp76ulo" path="res://ART/Your Art Here/267.JPG" id="8_hgp61"]
+[ext_resource type="Texture2D" uid="uid://dpa3irh8klsgk" path="res://ART/Your Art Here/DE7.JPG" id="9_dpvf1"]
+[ext_resource type="Texture2D" uid="uid://du1qagthc2voy" path="res://ART/Your Art Here/7ED.JPG" id="10_2jl7p"]
+[ext_resource type="Texture2D" uid="uid://d2t7nldi3dtwm" path="res://ART/Your Art Here/9FD.JPG" id="11_v5cmq"]
 
 [node name="Kitchen" type="Node3D"]
 transform = Transform3D(2.15, 0, 0, 0, 2.15, 0, 0, 0, 2.15, 0, 0, 0)
@@ -30,28 +30,28 @@ transform = Transform3D(0.247145, 0.588422, -0.769856, -0.0429426, 0.800374, 0.5
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(6.6874e-17, -1.5299e-09, 0.035, -0.035, -1.5299e-09, -4.63221e-24, 1.5299e-09, -0.035, -1.5299e-09, -8.87013, 6.64617, 4.76888)
-texture = ExtResource("2_klw06")
+texture = ExtResource("5_gojes")
 
 [node name="Sprite3D6" type="Sprite3D" parent="."]
 transform = Transform3D(6.6874e-17, -1.5299e-09, 0.035, -0.035, -1.5299e-09, -4.63221e-24, 1.5299e-09, -0.035, -1.5299e-09, -8.87013, 6.64617, 1.37691)
-texture = ExtResource("3_kjvjy")
+texture = ExtResource("6_1ysvi")
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
 transform = Transform3D(-1.5299e-09, 0.035, 0, -0.035, -1.5299e-09, 0, 0, 0, 0.035, 2.62231e-08, 5.26506, 0.128016)
-texture = ExtResource("4_ldhvh")
+texture = ExtResource("7_d0he5")
 
 [node name="Sprite3D7" type="Sprite3D" parent="."]
 transform = Transform3D(-4.37114e-09, 0.1, 0, -0.1, -4.37114e-09, 0, 0, 0, 0.1, -4.38203, 5.26506, 0.128016)
-texture = ExtResource("8_85m06")
+texture = ExtResource("8_hgp61")
 
 [node name="Sprite3D3" type="Sprite3D" parent="."]
 transform = Transform3D(-1.5299e-09, 0.035, 0, -0.035, -1.5299e-09, 0, 0, 0, 0.035, 2.48134, 6.89628, 0.128016)
-texture = ExtResource("5_7bbgu")
+texture = ExtResource("9_dpvf1")
 
 [node name="Sprite3D4" type="Sprite3D" parent="."]
 transform = Transform3D(-1.5299e-09, 0.035, 0, -0.035, -1.5299e-09, 0, 0, 0, 0.035, 5.265, 5.26506, 0.128016)
-texture = ExtResource("6_fbe0a")
+texture = ExtResource("10_2jl7p")
 
 [node name="Sprite3D5" type="Sprite3D" parent="."]
 transform = Transform3D(-1.5299e-09, 0.035, 0, -0.035, -1.5299e-09, 0, 0, 0, 0.035, 7.765, 6.896, 0.128)
-texture = ExtResource("7_okthn")
+texture = ExtResource("11_v5cmq")

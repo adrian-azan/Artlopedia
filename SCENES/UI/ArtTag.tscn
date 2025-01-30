@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://begjbm2s02p56"]
+
+[ext_resource type="FontFile" uid="uid://bap4pqwq0wokt" path="res://ART/THEMES/pikmin_by_theadorableoshawott-da33cfr.ttf" id="1_bjnyq"]
+
+[node name="ArtTag" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_bjnyq")
+text = "ExampleTag"
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "X"
+flat = true

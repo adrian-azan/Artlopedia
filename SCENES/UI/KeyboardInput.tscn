@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://oqdkwxt2dys5"]
+
+[ext_resource type="Texture2D" uid="uid://clxn6s78pbyfq" path="res://ART/UI/TitleBackground.png" id="1_neyhl"]
+
+[node name="KeyboardInput" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(142, 61)
+texture = ExtResource("1_neyhl")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 27.0
+offset_right = 267.0
+offset_bottom = 72.0
+max_length = 40
+
+[node name="Subject" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 244.0
+offset_bottom = 28.0
+text = "Temp"
+scroll_active = false
