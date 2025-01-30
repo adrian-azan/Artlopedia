@@ -1,8 +1,5 @@
-using Amazon.Runtime.Internal;
 using Godot;
 using Godot.Collections;
-using System;
-using System.Reflection.Metadata.Ecma335;
 
 public partial class RootWindow : Node2D
 {

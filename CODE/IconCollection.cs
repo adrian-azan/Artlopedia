@@ -40,9 +40,11 @@ public partial class IconCollection : Node2D
         {
             Dictionary artDetails = null;
 
+            //Check if a details file exists for current art piece
             FileAccess fa = FileAccess.Open(String.Format("res://ART/Your Art Here/Details/{0}.txt", artId.Split(".")[0]), FileAccess.ModeFlags.Read);
             if (fa != null)
                 artDetails = Json.ParseString(fa.GetAsText()).AsGodotDictionary();
+            //If there is no details file, create file with default art details
             else
             {
                 artDetails = new Dictionary();
@@ -61,15 +63,21 @@ public partial class IconCollection : Node2D
                 artDetails.Add("dimensions", dimensionsDefault);
                 artDetails.Add("orientation", orientationDefault);
 
-                var rng = new RandomNumberGenerator();
-                string id;
-                do
+                //Check if artpiece has a valid hexidecimal name
+                string id = artId.Split(".")[0];
+                if (id.IsValidHexNumber() == false)
                 {
-                    id = rng.RandiRange(0, 4095).ToString("X");
-                } while (FileAccess.FileExists(String.Format("res://ART/Your Art Here/Details/{0}.txt", id)));
+                    //Find a valid hex name that does not exist and rename art
+                    var rng = new RandomNumberGenerator();
+                    do
+                    {
+                        id = rng.RandiRange(0, 4095).ToString("X");
+                    } while (FileAccess.FileExists(String.Format("res://ART/Your Art Here/Details/{0}.txt", id)));
+                    DirAccess.RenameAbsolute(String.Format("res://ART/Your Art Here/{0}", artId), String.Format("res://ART/Your Art Here/{0}.JPG", id));
+                }
 
+                //Create details file with now valid id
                 artDetails["id"] = id;
-                DirAccess.RenameAbsolute(String.Format("res://ART/Your Art Here/{0}", artId), String.Format("res://ART/Your Art Here/{0}.JPG", id));
                 DirAccess.RenameAbsolute(String.Format("res://ART/Your Art Here/{0}.import", artId), String.Format("res://ART/Your Art Here/{0}.JPG.import", id));
                 var newDetails = FileAccess.Open(String.Format("res://ART/Your Art Here/Details/{0}.txt", id), FileAccess.ModeFlags.Write);
                 newDetails.Close();
