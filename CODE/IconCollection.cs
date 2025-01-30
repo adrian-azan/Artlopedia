@@ -65,7 +65,7 @@ public partial class IconCollection : Node2D
 
                 //Check if artpiece has a valid hexidecimal name
                 string id = artId.Split(".")[0];
-                if (id.IsValidHexNumber() == false)
+                if (Tools.ValidId(id) == false)
                 {
                     //Find a valid hex name that does not exist and rename art
                     var rng = new RandomNumberGenerator();

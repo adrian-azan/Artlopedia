@@ -89,7 +89,7 @@ public partial class RightPanel : Node2D
             _keyboardInput.Visible = false;
             GetNode<Control>("ArtId").GrabFocus();
 
-            if (!Input.IsActionJustPressed("East RightThumb") && !Input.IsKeyPressed(Key.Escape) && ValidId(_keyboardInput.GetNode<LineEdit>("LineEdit").Text))
+            if (!Input.IsActionJustPressed("East RightThumb") && !Input.IsKeyPressed(Key.Escape) && Tools.ValidId(_keyboardInput.GetNode<LineEdit>("LineEdit").Text))
             {
                 _currentFocus._id = _keyboardInput.GetNode<LineEdit>("LineEdit").Text.ToUpper();
             }
@@ -151,14 +151,6 @@ public partial class RightPanel : Node2D
         {
             _typing = true;
         }
-    }
-
-    private bool ValidId(string id)
-    {
-        if (id == null || id.Length > 3) return false;
-        if (id.IsValidHexNumber() == false) return false;
-        if (FileAccess.FileExists(String.Format("res://ART/Your Art Here/Details/{0}.txt", id))) return false;
-        return true;
     }
 
     public void Focus3DView()
