@@ -170,7 +170,7 @@ public partial class RightPanel : Node2D
 
     public void SetFocusedArt(ArtIcon currentFocus)
     {
-        _portView3D[_currentPortView].ChangeArt(currentFocus.ArtTexture());
+        // _portView3D[_currentPortView].ChangeArt(currentFocus.ArtTexture());
         _artTitle.Text = currentFocus._title;
         _artId.Text = currentFocus._id;
         _starRating.SetRating(currentFocus._rating);

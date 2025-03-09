@@ -47,7 +47,7 @@ public partial class RootWindow : Node2D
 
     public override void _Process(double delta)
     {
-        _rightPanel.SetFocusedArt(_iconCollection.FocusedArtIcon());
+        //_rightPanel.SetFocusedArt(_iconCollection.FocusedArtIcon());
 
         if (_state == State.Icon)
         {

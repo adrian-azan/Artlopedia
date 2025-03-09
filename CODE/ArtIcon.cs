@@ -9,7 +9,6 @@ public partial class ArtIcon : Control
     private TextureRect _background;
     private TextureRect _art;
 
-    private Texture2D _artLowRez;
     private Texture2D _artHighRes;
 
     private Texture2D _highlighted;
@@ -37,23 +36,23 @@ public partial class ArtIcon : Control
 
     public async void LoadArtTexture()
     {
+        ImageTexture artLowRes = null;
         await Task.Run(() =>
         {
             var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.LowResolutionDirectory(), _id));
             image.Compress(Image.CompressMode.S3Tc);
-            _artLowRez = ImageTexture.CreateFromImage(image);
+            artLowRes = ImageTexture.CreateFromImage(image);
 
             //TODO: HighRes art should only be loaded for icons near selection and should be removed from memory.
             //  image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.ArtDirectory(), _id));
             //  image.Compress(Image.CompressMode.S3Tc);
             //  _artHighRes = ImageTexture.CreateFromImage(image);
         });
-        _art.Texture = _artLowRez;
+        _art.Texture = artLowRes;
     }
 
     public void Clear()
     {
-        _artLowRez = null;
         _art.Texture = null;
     }
 
