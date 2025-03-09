@@ -1,12 +1,16 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Threading.Tasks;
 
 public partial class ArtIcon : Control
 {
     private AspectRatioContainer _container;
     private TextureRect _background;
     private TextureRect _art;
+
+    private Texture2D _artLowRez;
+    private Texture2D _artHighRes;
 
     private Texture2D _highlighted;
     private Texture2D _normal;
@@ -31,15 +35,31 @@ public partial class ArtIcon : Control
         _normal = ResourceLoader.Load("res://ART/UI/ArtBackground.png") as Texture2D;
     }
 
-    public void ArtTexture(ArtIcon artIcon)
+    public async void LoadArtTexture()
     {
-        _art.Texture = artIcon._art.Texture;
-        _container.Rotation = artIcon._container.Rotation;
+        await Task.Run(() =>
+        {
+            var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.LowResolutionDirectory(), _id));
+            image.Compress(Image.CompressMode.S3Tc);
+            _artLowRez = ImageTexture.CreateFromImage(image);
+
+            //TODO: HighRes art should only be loaded for icons near selection and should be removed from memory.
+            //  image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.ArtDirectory(), _id));
+            //  image.Compress(Image.CompressMode.S3Tc);
+            //  _artHighRes = ImageTexture.CreateFromImage(image);
+        });
+        _art.Texture = _artLowRez;
+    }
+
+    public void Clear()
+    {
+        _artLowRez = null;
+        _art.Texture = null;
     }
 
     public Texture2D ArtTexture()
     {
-        return _art.Texture;
+        return _artHighRes;
     }
 
     public void RotateClockwise()
@@ -62,7 +82,7 @@ public partial class ArtIcon : Control
         _background.Texture = _normal;
     }
 
-    public void Deserialize(Dictionary artDetails)
+    public void Deserialize(Dictionary artDetails, bool withImage = false)
     {
         _height = (float)artDetails["dimensions"].AsGodotDictionary()["height"];
         _width = (float)artDetails["dimensions"].AsGodotDictionary()["width"];
@@ -78,7 +98,10 @@ public partial class ArtIcon : Control
         _tags = artDetails["tags"].AsStringArray();
         _title = artDetails["title"].AsString();
 
-        _art.Texture = ResourceLoader.Load(String.Format("res://ART/Your Art Here/{0}.JPG", _id)) as Texture2D;
+        if (withImage)
+        {
+            LoadArtTexture();
+        }
     }
 
     public Dictionary Serialize()
@@ -100,5 +123,26 @@ public partial class ArtIcon : Control
         output.Add("orientation", orientation);
 
         return output;
+    }
+
+    public static Dictionary Default()
+    {
+        Dictionary defaultDetails = new Dictionary();
+        Dictionary dimensionsDefault = new Dictionary();
+        dimensionsDefault.Add("width", 0);
+        dimensionsDefault.Add("height", 0);
+        Dictionary orientationDefault = new Dictionary();
+        orientationDefault.Add("2D", 0);
+        orientationDefault.Add("3D", 0);
+
+        defaultDetails.Add("title", "");
+        defaultDetails.Add("id", "00");
+        defaultDetails.Add("rating", 2.5);
+        defaultDetails.Add("tags", new string[0]);
+        defaultDetails.Add("locationPurchased", "");
+        defaultDetails.Add("dimensions", dimensionsDefault);
+        defaultDetails.Add("orientation", orientationDefault);
+
+        return defaultDetails;
     }
 }

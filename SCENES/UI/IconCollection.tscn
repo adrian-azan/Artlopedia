@@ -76,3 +76,8 @@ theme_override_constants/separation = 50
 libraries = {
 "": SubResource("AnimationLibrary_77k5b")
 }
+
+[node name="SlideShow" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="timeout" from="SlideShow" to="." method="Random"]

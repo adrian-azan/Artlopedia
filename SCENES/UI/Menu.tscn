@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhedpnvkp6lak"]
+
+[ext_resource type="Texture2D" uid="uid://clxn6s78pbyfq" path="res://ART/UI/TitleBackground.png" id="1_iyv0b"]
+[ext_resource type="Texture2D" uid="uid://djsq6mpk7d3nj" path="res://ART/UI/Play.png" id="2_qiqwl"]
+[ext_resource type="Texture2D" uid="uid://bi1fn73bbj73l" path="res://ART/UI/Randomize.png" id="3_2jecn"]
+[ext_resource type="Texture2D" uid="uid://b4kyv7ex37ovc" path="res://ART/UI/Quit.png" id="3_84br0"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_iyv0b")
+
+[node name="Play" type="Sprite2D" parent="."]
+position = Vector2(5, -21)
+texture = ExtResource("2_qiqwl")
+
+[node name="Quit" type="Sprite2D" parent="."]
+position = Vector2(101, -22)
+texture = ExtResource("3_84br0")
+
+[node name="Random" type="Sprite2D" parent="."]
+position = Vector2(-102.885, -21)
+texture = ExtResource("3_2jecn")

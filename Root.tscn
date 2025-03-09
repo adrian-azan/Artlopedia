@@ -37,3 +37,9 @@ scale = Vector2(1, 0.857)
 [node name="IconCollection" parent="." instance=ExtResource("1_c53fi")]
 position = Vector2(-553, -220)
 scale = Vector2(2, 2)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -93.0
+offset_top = 246.0
+offset_right = -53.0
+offset_bottom = 269.0

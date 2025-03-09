@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System.IO;
 
 public partial class RootWindow : Node2D
 {
@@ -33,6 +34,10 @@ public partial class RootWindow : Node2D
 
         _httpRequestHandler = GetNode<HttpRequestHandler>("HttpRequestHandler");
         _httpRequestHandler.RequestCompleted += ProcessCompletedRequest;
+
+        FileManager.Init();
+
+        _iconCollection.InitIcons();
 
         SaveAllArt();
         LoadAllArt();
@@ -106,15 +111,21 @@ public partial class RootWindow : Node2D
         if (_savePreference == SavePreference.Remote || _savePreference == SavePreference.Both)
             _httpRequestHandler.PUT(artIcons);
         else if (_savePreference == SavePreference.Local || _savePreference == SavePreference.Both)
-            _iconCollection.SAVE(artIcons);
+            FileManager.SaveDetails(artIcons);
     }
 
     public void LoadAllArt()
     {
-        if (_savePreference == SavePreference.Remote || _savePreference == SavePreference.Both)
+        if (_savePreference == SavePreference.Remote)
             _httpRequestHandler.GET();
         else if (_savePreference == SavePreference.Local || _savePreference == SavePreference.Both)
-            _iconCollection.LOAD();
+        {
+            Array<Dictionary> details = FileManager.LoadDetails();
+            foreach (var detail in details)
+            {
+                _iconCollection.SetDetails(detail);
+            }
+        }
     }
 
     public void ProcessCompletedRequest(long result, long responseCode, string[] headers, byte[] body)
@@ -131,10 +142,8 @@ public partial class RootWindow : Node2D
             foreach (var artDetails in allRemoteArt_Unformatted)
             {
                 Dictionary artDetailsDictionary = Json.ParseString(artDetails.AsString()).AsGodotDictionary();
-                allArtDetails.Add(artDetailsDictionary["id"].AsString(), artDetailsDictionary);
+                _iconCollection.SetDetails(artDetailsDictionary);
             }
-
-            _iconCollection.AllArt(allArtDetails);
         }
 
         _httpRequestHandler._lastRequest = HttpRequestHandler.RequestTypes.NONE;
