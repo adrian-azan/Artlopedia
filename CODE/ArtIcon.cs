@@ -24,6 +24,8 @@ public partial class ArtIcon : Control
     public float _orientation2D;
     public float _orientation3D;
 
+    public Task LOADING;
+
     public override void _Ready()
     {
         _background = GetNode<TextureRect>("Background");
@@ -34,21 +36,31 @@ public partial class ArtIcon : Control
         _normal = ResourceLoader.Load("res://ART/UI/ArtBackground.png") as Texture2D;
     }
 
-    public async void LoadArtTexture()
+    public async void LoadLowResolution()
     {
+        if (_art.Texture != null) return;
+
         ImageTexture artLowRes = null;
-        await Task.Run(() =>
+        LOADING = Task.Run(() =>
         {
             var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.LowResolutionDirectory(), _id));
             image.Compress(Image.CompressMode.S3Tc);
             artLowRes = ImageTexture.CreateFromImage(image);
-
-            //TODO: HighRes art should only be loaded for icons near selection and should be removed from memory.
-            //  image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.ArtDirectory(), _id));
-            //  image.Compress(Image.CompressMode.S3Tc);
-            //  _artHighRes = ImageTexture.CreateFromImage(image);
         });
+        await LOADING;
+
         _art.Texture = artLowRes;
+    }
+
+    public async void LoadHighResolution()
+    {
+        await Task.Run(() =>
+        {
+            //TODO: HighRes art should only be loaded for icons near selection and should be removed from memory.
+            var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.ArtDirectory(), _id));
+            image.Compress(Image.CompressMode.S3Tc);
+            _artHighRes = ImageTexture.CreateFromImage(image);
+        });
     }
 
     public void Clear()
@@ -99,7 +111,7 @@ public partial class ArtIcon : Control
 
         if (withImage)
         {
-            LoadArtTexture();
+            LoadLowResolution();
         }
     }
 

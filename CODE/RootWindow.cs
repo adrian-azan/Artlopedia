@@ -41,6 +41,7 @@ public partial class RootWindow : Node2D
 
         SaveAllArt();
         LoadAllArt();
+        _iconCollection.PreLoadIcons();
 
         _state = State.Icon;
     }

@@ -54,6 +54,7 @@ _data = {
 [node name="IconCollection" type="Node2D"]
 position = Vector2(0, -37.5)
 script = ExtResource("1_w76f5")
+preloadBufferPercentage = 0.4
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_top = -40.0
@@ -80,4 +81,9 @@ libraries = {
 [node name="SlideShow" type="Timer" parent="."]
 wait_time = 4.0
 
+[node name="Refresh" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="timeout" from="SlideShow" to="." method="Random"]
+[connection signal="timeout" from="Refresh" to="." method="COLLECT"]

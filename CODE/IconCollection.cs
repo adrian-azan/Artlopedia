@@ -19,9 +19,12 @@ public partial class IconCollection : Node2D
     private Dictionary<string, ArtIcon> _allDetails;
     private PortView3D _portView3D;
 
+    [Export(PropertyHint.Range, "0,1,0.2")]
+    public float preloadBufferPercentage;
+
     public override void _Ready()
     {
-        row = 0;
+        row = 4;
         col = 0;
         _portView3D = Tools.GetChild<PortView3D>(GetNode(".."));
         _allIcons = Variant.From(GetNode("HBoxContainer").GetChildren()).AsGodotArray<VBoxContainer>();
@@ -61,10 +64,30 @@ public partial class IconCollection : Node2D
     public void _Control(double delta)
     {
         if (Input.IsActionJustPressed("Up"))
+        {
             Up();
+            for (int i = 0; i < 3; i++)
+            {
+                if (row - 10 >= 0)
+                    (_allIcons[i].GetChildren()[row - 10] as ArtIcon).LoadLowResolution();
+                if (row + 10 < _allIcons[i].GetChildren().Count)
+                    (_allIcons[i].GetChildren()[row + 10] as ArtIcon).Clear();
+            }
+            GetNode<Timer>("Refresh").Start();
+        }
 
         if (Input.IsActionJustPressed("Down"))
+        {
             Down();
+            for (int i = 0; i < 3; i++)
+            {
+                if (row + 10 < _allIcons[i].GetChildren().Count)
+                    (_allIcons[i].GetChildren()[row + 10] as ArtIcon).LoadLowResolution();
+                if (row - 10 >= 0)
+                    (_allIcons[i].GetChildren()[row - 10] as ArtIcon).Clear();
+            }
+            GetNode<Timer>("Refresh").Start();
+        }
 
         if (Input.IsActionJustPressed("Right"))
             Right();
@@ -82,21 +105,7 @@ public partial class IconCollection : Node2D
             _portView3D.RotateClockwise();
 
         if (Input.IsActionJustPressed("RotateCounterClockwise3D"))
-        {
             _portView3D.RotateCounterClockwise();
-
-            foreach (var column in _allIcons)
-            {
-                var columnArt = column.GetChildren();
-
-                foreach (var art in columnArt)
-                {
-                    (art as ArtIcon).Clear();
-                }
-            }
-
-            COLLECT();
-        }
     }
 
     public async void COLLECT()
@@ -112,7 +121,7 @@ public partial class IconCollection : Node2D
 
     public void SetDetails(Dictionary detail)
     {
-        _allDetails[detail["id"].ToString()].Deserialize(detail, true);
+        _allDetails[detail["id"].ToString()].Deserialize(detail);
     }
 
     public Array<ArtIcon> AllArt()
@@ -130,6 +139,61 @@ public partial class IconCollection : Node2D
         }
 
         return allArt;
+    }
+
+    public void PreLoadIcons()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 10 && j < _allIcons[i].GetChildCount(); j++)
+            {
+                (_allIcons[i].GetChildren()[j] as ArtIcon).LoadLowResolution();
+            }
+        }
+        /*   var grid = new Array<Array<ArtIcon>>();
+
+           for (int i = 0; i < _allIcons.Count; i++)
+           {
+               var iconsInAColumn = Tools.GetChildren<ArtIcon>(_allIcons[i]);
+               grid.Add(new Array<ArtIcon>());
+               for (int j = 0; j < iconsInAColumn.Count; j++)
+               {
+                   grid[i].Add(iconsInAColumn[j]);
+               }
+           }
+
+           int rowsToKeep = 20;//(int)(_lastFilledRow * preloadBufferPercentage);
+           rowsToKeep = rowsToKeep < 5 ? 20 : rowsToKeep;
+
+           int startOverflow = -1;
+
+           int start = (int)(row - rowsToKeep / 2);
+           if (start < 0)
+           {
+               startOverflow = Math.Abs(start);
+               start = 0;
+           }
+
+           int endOverflow = 0;
+           int end = (int)(row + rowsToKeep / 2);
+
+           GetNode<Label>("../end").Text = end.ToString();
+           GetNode<Label>("../start").Text = start.ToString();
+
+           for (int i = 0; i < grid.Count; i++)
+           {
+               for (int j = 0; j < grid[i].Count; j++)
+               {
+                   if ((j >= start && j <= end))
+                       grid[i][j].LoadLowResolution();
+                   else
+                   {
+                       grid[i][j].Clear();
+                   }
+               }
+           }
+           COLLECT();
+        */
     }
 
     public void Down()
