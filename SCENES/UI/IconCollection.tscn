@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://m37vxohbdie7"]
 
-[ext_resource type="Script" path="res://CODE/IconCollection.cs" id="1_w76f5"]
+[ext_resource type="Script" uid="uid://dsomsgwhbm5ve" path="res://CODE/IconCollection.cs" id="1_w76f5"]
 
 [sub_resource type="Animation" id="Animation_4sa50"]
 length = 0.001
@@ -47,8 +47,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_77k5b"]
 _data = {
-"RESET": SubResource("Animation_4sa50"),
-"Up": SubResource("Animation_f24wd")
+&"RESET": SubResource("Animation_4sa50"),
+&"Up": SubResource("Animation_f24wd")
 }
 
 [node name="IconCollection" type="Node2D"]
@@ -75,15 +75,10 @@ theme_override_constants/separation = 50
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_77k5b")
+&"": SubResource("AnimationLibrary_77k5b")
 }
 
 [node name="SlideShow" type="Timer" parent="."]
 wait_time = 4.0
 
-[node name="Refresh" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-
 [connection signal="timeout" from="SlideShow" to="." method="Random"]
-[connection signal="timeout" from="Refresh" to="." method="COLLECT"]

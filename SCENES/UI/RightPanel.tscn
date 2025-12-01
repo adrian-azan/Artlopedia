@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://mo02sw5hpvph"]
 
-[ext_resource type="Script" path="res://CODE/RightPanel.cs" id="1_6iyby"]
+[ext_resource type="Script" uid="uid://cpc2nlcw3unh8" path="res://CODE/RightPanel.cs" id="1_6iyby"]
 [ext_resource type="PackedScene" uid="uid://bun4786lcjrqy" path="res://SCENES/UI/ArtTitle.tscn" id="1_qjsnb"]
 [ext_resource type="PackedScene" uid="uid://oqdkwxt2dys5" path="res://SCENES/UI/KeyboardInput.tscn" id="2_25g1h"]
 [ext_resource type="PackedScene" uid="uid://orwe8thc52t8" path="res://SCENES/UI/KeyboardInputSize.tscn" id="2_lqpjn"]
@@ -69,9 +69,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w7lco"]
 _data = {
-"Grow": SubResource("Animation_6f1xb"),
-"RESET": SubResource("Animation_cglci"),
-"Shrink": SubResource("Animation_cadxy")
+&"Grow": SubResource("Animation_6f1xb"),
+&"RESET": SubResource("Animation_cglci"),
+&"Shrink": SubResource("Animation_cadxy")
 }
 
 [node name="RightPanel" type="Node2D"]

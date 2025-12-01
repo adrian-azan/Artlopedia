@@ -43,9 +43,16 @@ public partial class ArtIcon : Control
         ImageTexture artLowRes = null;
         LOADING = Task.Run(() =>
         {
+            Logging.PrintInfo(Logging.Category_Data_Management, "Loading Low Rez", "LowRez");
+
+            
             var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.LowResolutionDirectory(), _id));
+            image.ShrinkX2();
+            image.ShrinkX2();
             image.Compress(Image.CompressMode.S3Tc);
             artLowRes = ImageTexture.CreateFromImage(image);
+            
+            Logging.PrintInfo(Logging.Category_Data_Management, "Loaded Low Rez", "LowRez");
         });
         await LOADING;
 
@@ -54,18 +61,29 @@ public partial class ArtIcon : Control
 
     public async void LoadHighResolution()
     {
+        //TODO: HighRes art should only be loaded for icons near selection and should be removed from memory.
+        if (_artHighRes != null)
+            return;
+        
         await Task.Run(() =>
-        {
-            //TODO: HighRes art should only be loaded for icons near selection and should be removed from memory.
-            var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.ArtDirectory(), _id));
-            image.Compress(Image.CompressMode.S3Tc);
-            _artHighRes = ImageTexture.CreateFromImage(image);
-        });
+      {
+          Logging.PrintInfo(Logging.Category_Data_Management, "Loading High Rez", "HighLow");
+
+          var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.ArtDirectory(), _id));
+          image.ShrinkX2();
+          image.ShrinkX2();
+          image.Compress(Image.CompressMode.Bptc);
+          _artHighRes = ImageTexture.CreateFromImage(image);
+          
+          Logging.PrintInfo(Logging.Category_Data_Management, "Loaded High Rez", "HighLow");
+      });
+
     }
 
     public void Clear()
     {
         _art.Texture = null;
+        _artHighRes = null;
     }
 
     public Texture2D ArtTexture()
@@ -91,6 +109,12 @@ public partial class ArtIcon : Control
     public void UnHighlight()
     {
         _background.Texture = _normal;
+    }
+
+    public void DebugHighlight()
+    {
+        CreateTween().TweenProperty(GetNode<Sprite2D>("Sprite2D"), "visible", true, 0);
+        CreateTween().TweenProperty(GetNode<Sprite2D>("Sprite2D"), "visible", false, 2);
     }
 
     public void Deserialize(Dictionary artDetails, bool withImage = false)

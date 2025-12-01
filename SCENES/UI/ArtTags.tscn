@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dueik6aeov56h"]
 
-[ext_resource type="Script" path="res://CODE/DetailsIcon.cs" id="1_cmjhw"]
+[ext_resource type="Script" uid="uid://dlt6t0285wlaj" path="res://CODE/DetailsIcon.cs" id="1_cmjhw"]
 [ext_resource type="Texture2D" uid="uid://clxn6s78pbyfq" path="res://ART/UI/TitleBackground.png" id="2_snb1f"]
 
 [node name="ArtTags" type="Control"]

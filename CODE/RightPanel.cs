@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Runtime.CompilerServices;
 
 public partial class RightPanel : Node2D
 {
@@ -170,7 +171,9 @@ public partial class RightPanel : Node2D
 
     public void SetFocusedArt(ArtIcon currentFocus)
     {
-        // _portView3D[_currentPortView].ChangeArt(currentFocus.ArtTexture());
+        var highQuality = currentFocus.ArtTexture();
+
+        _portView3D[_currentPortView].ChangeArt(highQuality);
         _artTitle.Text = currentFocus._title;
         _artId.Text = currentFocus._id;
         _starRating.SetRating(currentFocus._rating);

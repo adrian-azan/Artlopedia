@@ -38,7 +38,7 @@ public partial class RootWindow : Node2D
         FileManager.Init();
 
         _iconCollection.InitIcons();
-
+        
         SaveAllArt();
         LoadAllArt();
         _iconCollection.PreLoadIcons();
@@ -48,7 +48,7 @@ public partial class RootWindow : Node2D
 
     public override void _Process(double delta)
     {
-        //_rightPanel.SetFocusedArt(_iconCollection.FocusedArtIcon());
+        _rightPanel.SetFocusedArt(_iconCollection.FocusedArtIcon());
 
         if (_state == State.Icon)
         {
@@ -103,6 +103,9 @@ public partial class RootWindow : Node2D
 
     public void SaveAllArt()
     {
+        Logging.PrintInfo(Logging.Category_File_Management, "Saving Art", "SaveArt");
+        
+        
         Array<Dictionary> artIcons = new Array<Dictionary>();
         foreach (var art in _iconCollection.AllArt())
         {
@@ -113,10 +116,16 @@ public partial class RootWindow : Node2D
             _httpRequestHandler.PUT(artIcons);
         else if (_savePreference == SavePreference.Local || _savePreference == SavePreference.Both)
             FileManager.SaveDetails(artIcons);
+        
+        
+        Logging.PrintInfo(Logging.Category_File_Management, "Art Saved", "SaveArt");
     }
 
     public void LoadAllArt()
-    {
+    {   
+        Logging.PrintInfo(Logging.Category_File_Management, "Loading Art", "LoadArt");
+
+        
         if (_savePreference == SavePreference.Remote)
             _httpRequestHandler.GET();
         else if (_savePreference == SavePreference.Local || _savePreference == SavePreference.Both)
@@ -127,6 +136,9 @@ public partial class RootWindow : Node2D
                 _iconCollection.SetDetails(detail);
             }
         }
+        
+        
+        Logging.PrintInfo(Logging.Category_File_Management, "Art Loaded", "LoadArt");
     }
 
     public void ProcessCompletedRequest(long result, long responseCode, string[] headers, byte[] body)
