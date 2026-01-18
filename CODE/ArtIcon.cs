@@ -11,9 +11,12 @@ public partial class ArtIcon : Control
 
     private Texture2D _artHighRes;
 
-    private Texture2D _highlighted;
-    private Texture2D _normal;
+    private static Texture2D _highlighted;
+    private static Texture2D _normal;
 
+    private Task LOADING_LOW;
+    private Task LOADING_HIGH;
+    
     public string _id;
     public string _title;
     public float _rating;
@@ -23,82 +26,105 @@ public partial class ArtIcon : Control
     public float _height;
     public float _orientation2D;
     public float _orientation3D;
-
-    public Task LOADING;
-
     public override void _Ready()
     {
         _background = GetNode<TextureRect>("Background");
         _art = GetNode<TextureRect>("AspectRatioContainer/Art");
         _container = GetNode<AspectRatioContainer>("AspectRatioContainer");
 
-        _highlighted = ResourceLoader.Load("res://ART/UI/ArtBackground Highlighted.png") as Texture2D;
-        _normal = ResourceLoader.Load("res://ART/UI/ArtBackground.png") as Texture2D;
+        if (_highlighted == null || _normal == null)
+        {
+            _highlighted = ResourceLoader.Load("res://ART/UI/ArtBackground Highlighted.png") as Texture2D;
+            _normal = ResourceLoader.Load("res://ART/UI/ArtBackground.png") as Texture2D;
+        }
+
+        LOADING_HIGH = null;
+        LOADING_LOW = null;
     }
 
     public async void LoadLowResolution()
     {
-        if (_art.Texture != null) return;
+        if (_art.Texture != null || LOADING_LOW != null) return;
 
         ImageTexture artLowRes = null;
-        LOADING = Task.Run(() =>
+        try
         {
-            Logging.PrintInfo(Logging.Category_Data_Management, "Loading Low Rez", "LowRez");
+            LOADING_LOW = Task.Run(() =>
+            {
+                Logging.PrintInfo(Logging.Category_Data_Management, "Loading Low Rez", "LowRez");
 
-            
-            var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.LowResolutionDirectory(), _id));
-            image.ShrinkX2();
-            image.ShrinkX2();
-            image.Compress(Image.CompressMode.S3Tc);
-            artLowRes = ImageTexture.CreateFromImage(image);
-            
-            Logging.PrintInfo(Logging.Category_Data_Management, "Loaded Low Rez", "LowRez");
-        });
-        await LOADING;
 
+                var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.LowResolutionDirectory(), _id));
+                image.ShrinkX2();
+                image.ShrinkX2();
+                image.Compress(Image.CompressMode.S3Tc);
+                artLowRes = ImageTexture.CreateFromImage(image);
+
+                Logging.PrintInfo(Logging.Category_Data_Management, "Loaded Low Rez", "LowRez");
+            });
+            await LOADING_LOW;
+        }
+        catch (Exception e)
+        {
+            Logging.PrintError($"ArtIcon","Failed to load low rez images - {e}");
+        }
         _art.Texture = artLowRes;
     }
 
     public async void LoadHighResolution()
     {
         //TODO: HighRes art should only be loaded for icons near selection and should be removed from memory.
-        if (_artHighRes != null)
+        if (_artHighRes != null || LOADING_HIGH != null)
             return;
-        
-        await Task.Run(() =>
-      {
-          Logging.PrintInfo(Logging.Category_Data_Management, "Loading High Rez", "HighLow");
 
-          var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.ArtDirectory(), _id));
-          image.ShrinkX2();
-          image.ShrinkX2();
-          image.Compress(Image.CompressMode.Bptc);
-          _artHighRes = ImageTexture.CreateFromImage(image);
-          
-          Logging.PrintInfo(Logging.Category_Data_Management, "Loaded High Rez", "HighLow");
-      });
+        try
+        {
+            LOADING_HIGH = Task.Run(() =>
+            {
+                Logging.PrintInfo(Logging.Category_Data_Management, "Loading High Rez", "HighLow");
 
+                var image = Image.LoadFromFile(String.Format("{0}/{1}.JPG", FileManager.ArtDirectory(), _id));
+                image.ShrinkX2();
+                image.ShrinkX2();
+                image.Compress(Image.CompressMode.Bptc);
+                _artHighRes = ImageTexture.CreateFromImage(image);
+
+                Logging.PrintInfo(Logging.Category_Data_Management, "Loaded High Rez", "HighLow");
+            });
+
+            await LOADING_HIGH;
+        }
+        catch (Exception e)
+        {
+            Logging.PrintError("ArtIcon",$"Failed to load high rez images - {e}");
+        }
     }
-
-    public void Clear()
-    {
-        _art.Texture = null;
-        _artHighRes = null;
-    }
-
+    
     public Texture2D ArtTexture()
     {
         return _artHighRes;
     }
-
+    
     public void RotateClockwise()
     {
-        _container.RotationDegrees += 90;
+        _orientation2D += 90;
+        _container.RotationDegrees = _orientation2D;
     }
 
     public void RotateCounterClockwise()
     {
-        _container.RotationDegrees -= 90;
+        _orientation2D -= 90;
+        _container.RotationDegrees = _orientation2D;
+    }
+    
+    public void RotateClockwise3D()
+    {
+        _orientation3D += 90;
+    }
+
+    public void RotateCounterClockwise3D()
+    {
+        _orientation3D -= 90;
     }
 
     public void Highlight()
@@ -109,12 +135,6 @@ public partial class ArtIcon : Control
     public void UnHighlight()
     {
         _background.Texture = _normal;
-    }
-
-    public void DebugHighlight()
-    {
-        CreateTween().TweenProperty(GetNode<Sprite2D>("Sprite2D"), "visible", true, 0);
-        CreateTween().TweenProperty(GetNode<Sprite2D>("Sprite2D"), "visible", false, 2);
     }
 
     public void Deserialize(Dictionary artDetails, bool withImage = false)
@@ -146,7 +166,7 @@ public partial class ArtIcon : Control
         dimensions.Add("width", _width);
         dimensions.Add("height", _height);
         Dictionary orientation = new Dictionary();
-        orientation.Add("2D", _container.RotationDegrees);
+        orientation.Add("2D", _orientation2D);
         orientation.Add("3D", _orientation3D);
 
         output.Add("title", _title);

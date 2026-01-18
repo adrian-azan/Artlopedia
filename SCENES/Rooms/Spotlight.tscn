@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2w26aw448b0e"]
+[gd_scene load_steps=7 format=3 uid="uid://d2w26aw448b0e"]
 
 [ext_resource type="Script" uid="uid://bejl72psmql8x" path="res://CODE/PortView3D.cs" id="1_ckpyq"]
 [ext_resource type="PackedScene" uid="uid://bhawtfetnd0l2" path="res://SCENES/Camera.tscn" id="2_fltm4"]
-[ext_resource type="Script" uid="uid://drn2iwsemmunv" path="res://CODE/Camera_Panning.cs" id="3_hlfs5"]
+[ext_resource type="Script" uid="uid://drn2iwsemmunv" path="res://CODE/Camera/Camera_Panning.cs" id="3_hlfs5"]
 [ext_resource type="PackedScene" uid="uid://b0jcbn4w1p0nc" path="res://ART/MODELS/RoomTiled.gltf" id="3_ullht"]
 [ext_resource type="PackedScene" uid="uid://bg6yw0k3glju1" path="res://SCENES/Easel.tscn" id="4_sess8"]
+[ext_resource type="Texture2D" uid="uid://owfws3tvvd7j" path="res://icon.svg" id="6_nxugo"]
 
 [node name="Spotlight" type="Node3D"]
 transform = Transform3D(2.15, 0, 0, 0, 2.15, 0, 0, 0, 2.15, 0, 0, 0)
@@ -49,5 +50,6 @@ spot_angle = 12.215
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(-1.74846e-08, 0.4, 1.22766e-14, -0.359518, -1.5715e-08, 0.175349, 0.175349, 7.66472e-09, 0.359518, 0, 8.938, -1.25477)
+texture = ExtResource("6_nxugo")
 
 [editable path="Camera"]

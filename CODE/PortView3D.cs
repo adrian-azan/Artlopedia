@@ -18,6 +18,8 @@ public partial class PortView3D : Node3D
 		_artIndex = (int)(_rng.Randi() % _art.Count);
 		_camera.Focus(_art[_artIndex]);
 		_camera.SetCamera();
+
+		CustomSignals._Instance.Rotate3DArt += SetRotation;
 	}
 
 	public override void _Process(double delta)
@@ -33,20 +35,14 @@ public partial class PortView3D : Node3D
 
 	public void ChangeArt(Texture2D art)
 	{
+		CreateTween().TweenProperty(_art[_artIndex], "transparency", 1, .1f);
+		CreateTween().TweenProperty(_art[_artIndex], "transparency", 0, .2f);
+		
 		_art[_artIndex].Texture = art;
 	}
 
-	public void RotateClockwise()
+	public void SetRotation(float rotationZ)
 	{
-		Sprite3D art = GetNode("Sprite3D") as Sprite3D;
-
-		art.RotationDegrees = new Vector3(-20, 0, art.RotationDegrees.Z - 90);
-	}
-
-	public void RotateCounterClockwise()
-	{
-		Sprite3D art = GetNode("Sprite3D") as Sprite3D;
-
-		art.RotationDegrees = new Vector3(-20, 0, art.RotationDegrees.Z + 90);
+		_art[_artIndex].RotationDegrees = new Vector3(-20, 0, rotationZ);
 	}
 }

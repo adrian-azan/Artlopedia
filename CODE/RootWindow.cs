@@ -35,6 +35,8 @@ public partial class RootWindow : Node2D
         _httpRequestHandler = GetNode<HttpRequestHandler>("HttpRequestHandler");
         _httpRequestHandler.RequestCompleted += ProcessCompletedRequest;
 
+        CustomSignals._Instance.SaveArt += SaveAllArt;
+        
         FileManager.Init();
 
         _iconCollection.InitIcons();
@@ -42,14 +44,19 @@ public partial class RootWindow : Node2D
         SaveAllArt();
         LoadAllArt();
         _iconCollection.PreLoadIcons();
+        _iconCollection.PreLoadHighDetail();
 
         _state = State.Icon;
     }
 
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        SaveAllArt();
+    }
+
     public override void _Process(double delta)
     {
-        _rightPanel.SetFocusedArt(_iconCollection.FocusedArtIcon());
-
         if (_state == State.Icon)
         {
             _iconCollection._Control(delta);
@@ -79,7 +86,7 @@ public partial class RootWindow : Node2D
 
         if (_state == State.Details)
         {
-            var guiFocus = GetViewport().GuiGetFocusOwner() as Control;
+            var guiFocus = GetViewport().GuiGetFocusOwner();
             if (guiFocus != null)
             {
                 var highlightable = guiFocus as DetailsIcon;

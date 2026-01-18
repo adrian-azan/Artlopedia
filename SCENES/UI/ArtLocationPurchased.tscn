@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bewuj45ydko1m"]
+
+[ext_resource type="Script" uid="uid://dlt6t0285wlaj" path="res://CODE/DetailsIcon.cs" id="1_pmn66"]
+[ext_resource type="Texture2D" uid="uid://clxn6s78pbyfq" path="res://ART/UI/TitleBackground.png" id="2_cnkqy"]
+[ext_resource type="FontFile" uid="uid://bap4pqwq0wokt" path="res://ART/THEMES/pikmin_by_theadorableoshawott-da33cfr.ttf" id="3_ebgv8"]
+
+[node name="ArtLocationPurchased" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+focus_mode = 2
+script = ExtResource("1_pmn66")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(202.50003, 48.5)
+scale = Vector2(1.1325, 0.755)
+texture = ExtResource("2_cnkqy")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = -1.0
+offset_right = 381.0
+offset_bottom = 67.0
+theme_override_fonts/normal_font = ExtResource("3_ebgv8")
+theme_override_font_sizes/normal_font_size = 29
+text = "Galaxy Con"
+fit_content = true
+scroll_active = false

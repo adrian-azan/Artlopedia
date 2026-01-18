@@ -23,7 +23,7 @@ public partial class Camera : Node3D
 	{
 		_camera.MakeCurrent();
 	}
-
+	
 	public virtual void Focus(Sprite3D subject)
 	{ }
 

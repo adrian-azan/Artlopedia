@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ckwn20cvxrgdv" path="res://ART/MODELS/Kitchen.gltf" id="1_bpoe1"]
 [ext_resource type="Script" uid="uid://bejl72psmql8x" path="res://CODE/PortView3D.cs" id="1_l8ju2"]
-[ext_resource type="Script" uid="uid://b4bbrcvcttywc" path="res://CODE/Camera_Tripod.cs" id="3_60bfe"]
+[ext_resource type="Script" uid="uid://b4bbrcvcttywc" path="res://CODE/Camera/Camera_Tripod.cs" id="3_60bfe"]
 [ext_resource type="PackedScene" uid="uid://bhawtfetnd0l2" path="res://SCENES/Camera.tscn" id="8_2choi"]
 
 [node name="Kitchen" type="Node3D"]

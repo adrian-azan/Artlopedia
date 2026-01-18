@@ -9,6 +9,7 @@ public partial class RightPanel : Node2D
     private int _currentPortView;
 
     private RichTextLabel _artTitle;
+    private RichTextLabel _artLocationPurchased;
     private RichTextLabel _artId;
     private RichTextLabel _artHeight;
     private RichTextLabel _artWidth;
@@ -19,7 +20,7 @@ public partial class RightPanel : Node2D
 
     private AnimationPlayer _animationPlayer;
     private bool _typing;
-    private Node _selectedDetail;
+    private Control _selectedDetail;
 
     public override void _Ready()
     {
@@ -31,12 +32,15 @@ public partial class RightPanel : Node2D
         _artId = GetNode<RichTextLabel>("ArtId/Control/ID Number");
         _artHeight = GetNode<RichTextLabel>("ArtSize/Height");
         _artWidth = GetNode<RichTextLabel>("ArtSize/Width");
+        _artLocationPurchased = GetNode<RichTextLabel>("ArtLocationPurchased/RichTextLabel");
         _starRating = GetNode<StarRating>("StarRating");
         _keyboardInput = GetNode<Control>("KeyboardInput");
         _keyboardInputSize = GetNode<Control>("KeyboardInputSize");
 
         _animationPlayer = GetNode<AnimationPlayer>("SubViewportContainer/AnimationPlayer");
         _animationPlayer.Stop();
+
+        CustomSignals._Instance.ChangeArt += SetFocusedArt;
     }
 
     public override void _Process(double delta)
@@ -77,7 +81,7 @@ public partial class RightPanel : Node2D
         if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtId") == GetViewport().GuiGetFocusOwner() && _typing == false)
         {
             _typing = true;
-            _selectedDetail = GetNode("ArtId");
+            _selectedDetail = GetNode<Control>("ArtId");
             _keyboardInput.Visible = true;
             _keyboardInput.GetNode<LineEdit>("LineEdit").GrabFocus();
             _keyboardInput.GetNode<LineEdit>("LineEdit").Text = _currentFocus._id;
@@ -93,16 +97,28 @@ public partial class RightPanel : Node2D
             if (!Input.IsActionJustPressed("East RightThumb") && !Input.IsKeyPressed(Key.Escape) && Tools.ValidId(_keyboardInput.GetNode<LineEdit>("LineEdit").Text))
             {
                 _currentFocus._id = _keyboardInput.GetNode<LineEdit>("LineEdit").Text.ToUpper();
+                UpdateArtDetails(_currentFocus);
+
+                CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.SaveArt);
             }
         }
 
         if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtTitle") == GetViewport().GuiGetFocusOwner() && _typing == false)
         {
             _typing = true;
-            _selectedDetail = GetNode("ArtTitle");
+            _selectedDetail = GetNode<Control>("ArtTitle");
             _keyboardInput.Visible = true;
             _keyboardInput.GetNode<LineEdit>("LineEdit").GrabFocus();
             _keyboardInput.GetNode<LineEdit>("LineEdit").Text = _currentFocus._title;
+        }
+        
+        else if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtLocationPurchased") == GetViewport().GuiGetFocusOwner() && !_typing)
+        {
+            _typing = true;
+            _selectedDetail = GetNode<Control>("ArtLocationPurchased");
+            _keyboardInput.Visible = true;
+            _keyboardInput.GetNode<LineEdit>("LineEdit").GrabFocus();
+            _keyboardInput.GetNode<LineEdit>("LineEdit").Text = _currentFocus._locationPurchased;
         }
 
         /* User can hit escape, enter, A, or B to close typing window
@@ -112,15 +128,23 @@ public partial class RightPanel : Node2D
          */
         else if ((Input.IsKeyPressed(Key.Enter) || Input.IsKeyPressed(Key.Escape) ||
             Input.IsActionJustPressed("South RightThumb") || Input.IsActionJustPressed("East RightThumb"))
-            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) && _selectedDetail == GetNode("ArtTitle") && _keyboardInput.GetNode<LineEdit>("LineEdit") == GetViewport().GuiGetFocusOwner())
+            && _typing == true && !Input.IsKeyPressed(Key.Space) && !Input.IsKeyPressed(Key.Backspace) && 
+            (_selectedDetail == GetNode("ArtTitle") || _selectedDetail == GetNode("ArtLocationPurchased")) && _keyboardInput.GetNode<LineEdit>("LineEdit") == GetViewport().GuiGetFocusOwner())
         {
             _typing = false;
             _keyboardInput.Visible = false;
-            GetNode<Control>("ArtTitle").GrabFocus();
+            _selectedDetail.GrabFocus();
 
             if (!Input.IsActionJustPressed("East RightThumb") && !Input.IsKeyPressed(Key.Escape))
             {
-                _currentFocus._title = _keyboardInput.GetNode<LineEdit>("LineEdit").Text;
+                if (_selectedDetail == GetNode("ArtTitle"))
+                    _currentFocus._title = _keyboardInput.GetNode<LineEdit>("LineEdit").Text;
+                if (_selectedDetail == GetNode("ArtLocationPurchased"))
+                    _currentFocus._locationPurchased = _keyboardInput.GetNode<LineEdit>("LineEdit").Text;
+                
+                UpdateArtDetails(_currentFocus);
+                
+                CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.SaveArt);
             }
         }
 
@@ -145,12 +169,10 @@ public partial class RightPanel : Node2D
             {
                 _currentFocus._width = _keyboardInputSize.GetNode<LineEdit>("Width").Text.ToInt();
                 _currentFocus._height = _keyboardInputSize.GetNode<LineEdit>("Height").Text.ToInt();
+                UpdateArtDetails(_currentFocus);
+                
+                CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.SaveArt);
             }
-        }
-
-        if (Input.IsActionJustPressed("South RightThumb") && GetNode("ArtTags") == GetViewport().GuiGetFocusOwner() && _typing == false)
-        {
-            _typing = true;
         }
     }
 
@@ -169,12 +191,18 @@ public partial class RightPanel : Node2D
         return _animationPlayer.IsPlaying() || _typing;
     }
 
-    public void SetFocusedArt(ArtIcon currentFocus)
+    private void SetFocusedArt(ArtIcon currentFocus)
     {
         var highQuality = currentFocus.ArtTexture();
 
         _portView3D[_currentPortView].ChangeArt(highQuality);
+        UpdateArtDetails(currentFocus);
+    }
+
+    private void UpdateArtDetails(ArtIcon currentFocus)
+    {
         _artTitle.Text = currentFocus._title;
+        _artLocationPurchased.Text = currentFocus._locationPurchased;
         _artId.Text = currentFocus._id;
         _starRating.SetRating(currentFocus._rating);
         _artHeight.Text = currentFocus._height.ToString();

@@ -21,9 +21,7 @@ public partial class IconCollection : Node2D
 
 	[Export(PropertyHint.Range, "0,1,0.2")]
 	public float preloadBufferPercentage;
-
-	private Texture2D _currentHighQualityArt;
-
+	
 	public override void _Ready()
 	{
 		row = 0;
@@ -76,41 +74,49 @@ public partial class IconCollection : Node2D
 		{
 			Up();
 			PreLoadHighDetail();
-			LoadHighDetail();
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.Rotate3DArt, FocusedArtIcon()._orientation3D);
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.ChangeArt, FocusedArtIcon());
 		}
 
 		if (Input.IsActionJustPressed("Down"))
 		{
 			Down();
 			PreLoadHighDetail();
-			LoadHighDetail();
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.Rotate3DArt, FocusedArtIcon()._orientation3D);
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.ChangeArt, FocusedArtIcon());
 		}
 
 		if (Input.IsActionJustPressed("Right"))
 		{
 			Right();
-			PreLoadHighDetail();
-			LoadHighDetail();
+			_portView3D.SetRotation(FocusedArtIcon()._orientation3D);
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.ChangeArt, FocusedArtIcon());
 		}
 
 		if (Input.IsActionJustPressed("Left"))
 		{
 			Left();
-			PreLoadHighDetail();
-			LoadHighDetail();
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.Rotate3DArt, FocusedArtIcon()._orientation3D);
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.ChangeArt, FocusedArtIcon());
 		}
 
 		if (Input.IsActionJustPressed("RotateClockwise"))
-			(_allIcons[col].GetChildren()[row] as ArtIcon).RotateClockwise();
+			FocusedArtIcon().RotateClockwise();
 
 		if (Input.IsActionJustPressed("RotateCounterClockwise"))
-			(_allIcons[col].GetChildren()[row] as ArtIcon).RotateCounterClockwise();
+			FocusedArtIcon().RotateCounterClockwise();
 
 		if (Input.IsActionJustPressed("RotateClockwise3D"))
-			_portView3D.RotateClockwise();
+		{
+			FocusedArtIcon().RotateClockwise3D();
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.Rotate3DArt, FocusedArtIcon()._orientation3D);
+		}
 
 		if (Input.IsActionJustPressed("RotateCounterClockwise3D"))
-			_portView3D.RotateCounterClockwise();
+		{
+			FocusedArtIcon().RotateCounterClockwise3D();
+			CustomSignals._Instance.EmitSignal(CustomSignals.SignalName.Rotate3DArt, FocusedArtIcon()._orientation3D);
+		}
 	}
 
 	public async void COLLECT()
@@ -170,20 +176,13 @@ public partial class IconCollection : Node2D
 				if (start < end && start <= j && j <= end)
 				{
 					(_allIcons[i].GetChildren()[j] as ArtIcon).LoadHighResolution();
-					(_allIcons[i].GetChildren()[j] as ArtIcon).DebugHighlight();
 				}
 				else if (start >= end && (start < j || j <= end))
 				{
 					(_allIcons[i].GetChildren()[j] as ArtIcon).LoadHighResolution();
-					(_allIcons[i].GetChildren()[j] as ArtIcon).DebugHighlight();
 				}
 			}
 		}
-	}
-
-	public void LoadHighDetail()
-	{
-		FocusedArtIcon().LoadHighResolution();
 	}
 
 	public void Down()

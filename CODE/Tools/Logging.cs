@@ -10,19 +10,31 @@ public static class Logging
 
 	private static Dictionary<String, float> Timers = new Dictionary<string, float>();
 	
+	public static void PrintTemp(String category, String message)
+	{
+		GD.PrintRich($"[color=#d5ff00][font_size=12]{category, -20}[/font_size][/color] {message}");
+	}
+	
 	public static void PrintInfo(String category, String message, String timerKey = null)
 	{
-		if (timerKey != null)
+		try
 		{
-			if (Timers.ContainsKey(timerKey))
+			if (timerKey != null)
 			{
-				message = $"{message,-20} {(Time.GetTicksMsec() - Timers[timerKey]) / 1000f}";
-				Timers.Remove(timerKey);
+				if (Timers.ContainsKey(timerKey))
+				{
+					message = $"{message,-20} {(Time.GetTicksMsec() - Timers[timerKey]) / 1000f}";
+					Timers.Remove(timerKey);
+				}
+				else
+				{
+					Timers[timerKey] = Time.GetTicksMsec();
+				}
 			}
-			else
-			{
-				Timers[timerKey] = Time.GetTicksMsec();
-			}
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr(e.ToString());
 		}
 
 		GD.PrintRich($"[color=#4285f4][font_size=12]{category, -20}[/font_size][/color] {message}");
